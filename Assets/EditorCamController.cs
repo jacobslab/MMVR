@@ -1,10 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UMA.Examples;
 public class EditorCamController : MonoBehaviour {
-	public static GameObject selectedObj;
+	GameObject selectedObj;
+	OrbitMouse mouseOrbit;
 
+
+	//EXPERIMENT IS A SINGLETON
+	private static EditorCamController _instance;
+
+	public static EditorCamController Instance{
+		get{
+			return _instance;
+		}
+	}
+
+	void Awake(){
+		if (_instance != null) {
+			Debug.Log ("Instance already exists!");
+			return;
+		}
+		_instance = this;
+		mouseOrbit = GetComponent<OrbitMouse> ();
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -15,17 +34,11 @@ public class EditorCamController : MonoBehaviour {
 
 	}
 
-	void OnMouseDown()
+	public void SetSelectedObject(GameObject objSelected)
 	{
-		RaycastHit hit;
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		if (Physics.Raycast (ray, out hit)) {
-
-			if (hit.collider != null) {
-				Debug.Log ("Target Object " + hit.collider.gameObject.name);
-			}
-		}
-
+		selectedObj = objSelected;
+		if (selectedObj != null)
+			mouseOrbit.target = selectedObj.transform;
 	}
 
 }

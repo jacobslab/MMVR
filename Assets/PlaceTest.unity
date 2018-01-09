@@ -977,8 +977,8 @@ GameObject:
   - component: {fileID: 2107577068}
   - component: {fileID: 2107577067}
   - component: {fileID: 2107577066}
-  - component: {fileID: 2107577070}
   - component: {fileID: 2107577071}
+  - component: {fileID: 2107577070}
   m_Layer: 0
   m_Name: EditorCamera
   m_TagString: MainCamera
@@ -1057,25 +1057,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2107577065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34117dad236f34e94aeede23f2028160, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ba933919cd89477fa91f0d8d1b93cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseButtonToUse: 1
   target: {fileID: 0}
-  distance: 0
+  distance: 5
   xSpeed: 120
   ySpeed: 120
-  scrollrate: 3
   yMinLimit: -20
   yMaxLimit: 80
   distanceMin: 0.5
-  distanceMax: 15
-  Offset: {x: 0, y: 0, z: 0}
-  AlwaysOn: 0
-  singleTouchOrbiting: 1
-  pinchToZoom: 1
-  Clip: 0
-  TargetBone: 
+  distanceMax: 1500
 --- !u!114 &2107577071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1087,4 +1079,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6d0af08c78240738c32f44b4681492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedObj: {fileID: 0}

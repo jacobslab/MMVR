@@ -4,7 +4,9 @@
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
-
+/Assets/Externals*
+/Assets/Editor Default Resources*
+/Assets/Plugins/Rogo Digital*
 # Visual Studio 2015 cache directory
 /.vs/
 

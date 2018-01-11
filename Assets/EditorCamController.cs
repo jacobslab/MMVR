@@ -41,4 +41,10 @@ public class EditorCamController : MonoBehaviour {
 			mouseOrbit.target = selectedObj.transform;
 	}
 
+	public GameObject GetSelectedObject()
+	{
+		return selectedObj;
+	}
+
+
 }

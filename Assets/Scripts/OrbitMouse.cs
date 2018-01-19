@@ -45,10 +45,10 @@ public class OrbitMouse : MonoBehaviour {
 			y = ClampAngle(y, yMinLimit, yMaxLimit);
 
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
-			Debug.Log ("distance max is: " + distanceMax.ToString ());
+//			Debug.Log ("distance max is: " + distanceMax.ToString ());
 			distance = Vector3.Distance (transform.position, target.position);
 			distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*5, distanceMin, distanceMax);
-			Debug.Log ("distance is: " + distance.ToString ());
+		//	Debug.Log ("distance is: " + distance.ToString ());
 			RaycastHit hit;
 			if (Physics.Linecast (target.position, transform.position, out hit)) 
 			{

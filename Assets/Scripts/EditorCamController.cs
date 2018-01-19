@@ -50,31 +50,41 @@ public class EditorCamController : MonoBehaviour {
 	{
 		for (int i = 0; i < spawnToJson.Count; i++) {
 			SpawnableObject respawnedObj= JsonUtility.FromJson<SpawnableObject> (spawnToJson[i]);
+			SpawnableObject newObj;
 			if (placeManager.spawnedObjList [i].ok == null) {
 				switch (respawnedObj.objType) {
 				case SpawnableObject.ObjectType.Cube:
-					SpawnableObject newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos,SpawnableObject.ObjectType.Cube);
+					//Debug.Log ("respawning cube");
+					newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos, respawnedObj.rot, SpawnableObject.ObjectType.Cube);
 					newObj.ok.GetComponent<Renderer> ().material.color = Color.red;
+					placeManager.spawnedObjList.Add (newObj);
+					break;
+				case SpawnableObject.ObjectType.Character:
+					//Debug.Log ("respawning character");
+					newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos, respawnedObj.rot, SpawnableObject.ObjectType.Character);
+					newObj.ok.GetComponent<Renderer> ().material.color = Color.green;
 					placeManager.spawnedObjList.Add (newObj);
 					break;
 
 				}
+				ClearNullObjects ();
 			}
-			Debug.Log ("respawned objects" + respawnedObj.pos.ToString());
+			//Debug.Log ("respawned objects" + respawnedObj.pos.ToString());
 		}
 	}
 	public void Save()
 	{
 		spawnToJson.Clear ();
-		ClearNullObjects();
+
+		ClearNullObjects ();
 		Debug.Log("spawn to json list length is: " + spawnToJson.Count.ToString());
 		Debug.Log ("spawnobjlist length is: " + placeManager.spawnedObjList.Count.ToString());	
 		for(int i=0;i<placeManager.spawnedObjList.Count;i++)
 		{
-				Debug.Log ("position on save: " + placeManager.spawnedObjList [i].ok.transform.position.ToString ());
+				//Debug.Log ("position on save: " + placeManager.spawnedObjList [i].ok.transform.position.ToString ());
 				placeManager.spawnedObjList [i].UpdateValues ();
 				spawnToJson.Add (JsonUtility.ToJson (placeManager.spawnedObjList [i], true));
-				Debug.Log ("spawntojson is:" + spawnToJson [i]);
+				//Debug.Log ("spawntojson is:" + spawnToJson [i]);
 		}
 	}
 
@@ -82,10 +92,12 @@ public class EditorCamController : MonoBehaviour {
 	{
 		for(int i=0;i<placeManager.spawnedObjList.Count;i++)
 		{
-		if (placeManager.spawnedObjList [i].ok == null)
-			placeManager.spawnedObjList.RemoveAt (i);
+			if (placeManager.spawnedObjList [i].ok == null) {
+				Debug.Log ("removed some NULL objects at index " + i.ToString());
+				placeManager.spawnedObjList.RemoveAt (i);
+			}
+
 		}
-		Debug.Log ("removed any null objects");
 	}
 
 	public void Destroy()

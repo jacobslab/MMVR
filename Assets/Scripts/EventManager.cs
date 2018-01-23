@@ -11,6 +11,9 @@ public class EventManager : MonoBehaviour {
 		// elements of the list change.
 		public event ChangedEventHandler Changed;
 
+	public delegate void SpawnableEventHandler ();
+	public static event SpawnableEventHandler OnSpawned;
+	public static event SpawnableEventHandler OnDestroyed;
 		// Invoke the Changed event; called whenever list changes
 		protected virtual void OnChanged(EventArgs e)
 		{

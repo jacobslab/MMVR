@@ -5,12 +5,12 @@ public class EditorCamController : MonoBehaviour {
 	GameObject selectedObj;
 	OrbitMouse mouseOrbit;
 	public PlaceManager placeManager;
+	public ObjectPanelManager panelManager;
 	private string json;
-
+	private EventManager eventManager;
 	public List<string> spawnToJson;
 	//EXPERIMENT IS A SINGLETON
 	private static EditorCamController _instance;
-
 	public static EditorCamController Instance{
 		get{
 			return _instance;
@@ -24,6 +24,9 @@ public class EditorCamController : MonoBehaviour {
 		}
 		_instance = this;
 		mouseOrbit = GetComponent<OrbitMouse> ();
+
+		//event handler associations
+		EventManager.OnDestroyed += Destroy;
 	}
 	// Use this for initialization
 	void Start () {
@@ -32,7 +35,6 @@ public class EditorCamController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 	}
 
 	public void SetSelectedObject(GameObject objSelected)

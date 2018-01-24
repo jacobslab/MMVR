@@ -5,14 +5,19 @@ using System;
 [Serializable]
 public class SpawnableObject {
 
-	public GameObject ok;
+	public GameObject gameObj;
 	public string objName;
 	public Vector3 pos;
 	public Vector3 rot;
 	public enum ObjectType
 	{
 		Cube,
-		Character
+		Character,
+		BoxObject,
+		CharPrefab,
+		CubePrefab,
+		Text,
+
 	}
 
 	public ObjectType objType;
@@ -25,30 +30,30 @@ public class SpawnableObject {
 		this.objType = objType;
 		switch (objType) {
 		case ObjectType.Cube:
-			ok = GameObject.CreatePrimitive (PrimitiveType.Cube);
+			gameObj = GameObject.CreatePrimitive (PrimitiveType.Cube);
 			break;
 		case ObjectType.Character:
 			Debug.Log ("spawned character");
-			ok = GameObject.Instantiate (Resources.Load<GameObject> ("Shelly"));
+			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("Shelly"));
 			break;
 		}
 
-		ok.transform.position = pos;
-		ok.transform.eulerAngles = rot;
-		ok.name = objName;
-		ok.AddComponent<ObjectManipulator> ();
+		gameObj.transform.position = pos;
+		gameObj.transform.eulerAngles = rot;
+		gameObj.name = objName;
+		gameObj.AddComponent<ObjectManipulator> ();
 		objType = ObjectType.Cube;
 
 	}
 	public void UpdateValues ()
 	{
-		pos = ok.transform.position;
-		rot = ok.transform.eulerAngles;
+		pos = gameObj.transform.position;
+		rot = gameObj.transform.eulerAngles;
 	}
 	public void Destroy()
 	{
-		if(ok!=null)
-			UnityEngine.Object.Destroy(ok);
+		if(gameObj!=null)
+			UnityEngine.Object.Destroy(gameObj);
 	}
 
 }

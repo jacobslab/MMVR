@@ -7,6 +7,7 @@ public class SpawnSelect : MonoBehaviour,IPointerEnterHandler, IPointerDownHandl
 
 	public GameObject associatedObj;
 	private bool selected=false;
+	public int assignedIndex=0;
 	private Text textComp;
 	// Use this for initialization
 	void Start () {
@@ -19,8 +20,7 @@ public class SpawnSelect : MonoBehaviour,IPointerEnterHandler, IPointerDownHandl
 			
 			if (Input.GetKeyDown (KeyCode.Backspace)) {
 				
-				EditorCamController.Instance.Destroy ();
-				Destroy (gameObject);
+				DestroyObject ();
 			}
 		}
 	}
@@ -30,13 +30,45 @@ public class SpawnSelect : MonoBehaviour,IPointerEnterHandler, IPointerDownHandl
 	public void OnPointerDown( PointerEventData eventData )
 	{
 //		Debug.Log ("click the text");
+		SelectTextObject();
+
+		//make the selected index of hierarchy equal to your assigned index
+		ObjectPanelManager.selectedIndex = assignedIndex;
+	}
+
+	public void DestroyObject()
+	{
+		
+	}
+
+	public void AdjustPosition()
+	{
+		GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (30f,150f + (assignedIndex * -20f), 0f);
+	}
+
+	public IEnumerator DestroyTextObject()
+	{
+		Destroy (gameObject);
+		yield return null;
+	}
+
+
+
+	public void SelectTextObject()
+	{
 		textComp.color = Color.red;
 		selected = true;
 		EditorCamController.Instance.SetSelectedObject (associatedObj);
 	}
 
-	public void OnPointerExit( PointerEventData eventData )
+	public void DeselectTextObject()
 	{
 		textComp.color = Color.black;
+		selected = false;
+	}
+
+	public void OnPointerExit( PointerEventData eventData )
+	{
+		DeselectTextObject ();
 	}
 }

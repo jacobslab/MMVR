@@ -4,8 +4,11 @@ using UnityEngine;
 public class EditorCamController : MonoBehaviour {
 	GameObject selectedObj;
 	OrbitMouse mouseOrbit;
+
 	public PlaceManager placeManager;
 	public ObjectPanelManager panelManager;
+	public HierarchyManager hierarchyManager;
+
 	private string json;
 	private EventManager eventManager;
 	public List<string> spawnToJson;
@@ -25,7 +28,7 @@ public class EditorCamController : MonoBehaviour {
 		_instance = this;
 		mouseOrbit = GetComponent<OrbitMouse> ();
 
-		//event handler associations
+		//event handler associations 
 		EventManager.OnDestroyed += Destroy;
 	}
 	// Use this for initialization
@@ -35,6 +38,11 @@ public class EditorCamController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (selectedObj != null) {
+			if (Input.GetKeyDown (KeyCode.Backspace)) {
+				StartCoroutine("DestroyObject");
+			}
+		}
 	}
 
 	public void SetSelectedObject(GameObject objSelected)
@@ -43,6 +51,7 @@ public class EditorCamController : MonoBehaviour {
 		if (selectedObj != null)
 			mouseOrbit.target = selectedObj.transform;
 	}
+		
 
 	public GameObject GetSelectedObject()
 	{
@@ -53,19 +62,19 @@ public class EditorCamController : MonoBehaviour {
 		for (int i = 0; i < spawnToJson.Count; i++) {
 			SpawnableObject respawnedObj= JsonUtility.FromJson<SpawnableObject> (spawnToJson[i]);
 			SpawnableObject newObj;
-			if (placeManager.spawnedObjList [i].ok == null) {
+			if (hierarchyManager.spawnedObjList [i].gameObj == null) {
 				switch (respawnedObj.objType) {
 				case SpawnableObject.ObjectType.Cube:
 					//Debug.Log ("respawning cube");
 					newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos, respawnedObj.rot, SpawnableObject.ObjectType.Cube);
-					newObj.ok.GetComponent<Renderer> ().material.color = Color.red;
-					placeManager.spawnedObjList.Add (newObj);
+					newObj.gameObj.GetComponent<Renderer> ().material.color = Color.red;
+					hierarchyManager.spawnedObjList.Add (newObj);
 					break;
 				case SpawnableObject.ObjectType.Character:
 					//Debug.Log ("respawning character");
 					newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos, respawnedObj.rot, SpawnableObject.ObjectType.Character);
-					newObj.ok.GetComponent<Renderer> ().material.color = Color.green;
-					placeManager.spawnedObjList.Add (newObj);
+					newObj.gameObj.GetComponent<Renderer> ().material.color = Color.green;
+					hierarchyManager.spawnedObjList.Add (newObj);
 					break;
 
 				}
@@ -80,26 +89,54 @@ public class EditorCamController : MonoBehaviour {
 
 		ClearNullObjects ();
 		Debug.Log("spawn to json list length is: " + spawnToJson.Count.ToString());
-		Debug.Log ("spawnobjlist length is: " + placeManager.spawnedObjList.Count.ToString());	
-		for(int i=0;i<placeManager.spawnedObjList.Count;i++)
+		Debug.Log ("spawnobjlist length is: " + hierarchyManager.spawnedObjList.Count.ToString());	
+		for(int i=0;i<hierarchyManager.spawnedObjList.Count;i++)
 		{
 				//Debug.Log ("position on save: " + placeManager.spawnedObjList [i].ok.transform.position.ToString ());
-				placeManager.spawnedObjList [i].UpdateValues ();
-				spawnToJson.Add (JsonUtility.ToJson (placeManager.spawnedObjList [i], true));
+				hierarchyManager.spawnedObjList [i].UpdateValues ();
+				spawnToJson.Add (JsonUtility.ToJson (hierarchyManager.spawnedObjList [i], true));
 				//Debug.Log ("spawntojson is:" + spawnToJson [i]);
 		}
 	}
 
 	void ClearNullObjects()
 	{
-		for(int i=0;i<placeManager.spawnedObjList.Count;i++)
+		for(int i=0;i<hierarchyManager.spawnedObjList.Count;i++)
 		{
-			if (placeManager.spawnedObjList [i].ok == null) {
+			if (hierarchyManager.spawnedObjList [i].gameObj == null) {
 				Debug.Log ("removed some NULL objects at index " + i.ToString());
-				placeManager.spawnedObjList.RemoveAt (i);
+				hierarchyManager.spawnedObjList.RemoveAt (i);
 			}
 
 		}
+	}
+
+	IEnumerator DestroyObject()
+	{
+		if (selectedObj != null) {
+
+			List<GameObject> keyList = new List<GameObject> (hierarchyManager.textSpawnableDict.Keys);
+			//search all keys for the selectedobj
+			for (int i = 0; i < keyList.Count; i++) {
+				SpawnableObject possibleObj;
+				hierarchyManager.textSpawnableDict.TryGetValue (keyList[i], out possibleObj);
+				if (possibleObj.gameObj == selectedObj) {
+					Debug.Log ("found a match");
+					yield return StartCoroutine(keyList [i].GetComponent<SpawnSelect> ().DestroyTextObject ());
+					//if found a match,then remove that key as we are destroying it
+					hierarchyManager.textSpawnableDict.Remove (keyList[i]);
+					//decrement the overall index
+					panelManager.DecrementIndex ();
+					//push up all the indices located below the about to be destroyed index
+					hierarchyManager.AdjustTextIndex(i);
+					//clear null objects from the list
+					ClearNullObjects();
+					Destroy ();
+
+				}
+			}
+		}
+		yield return null;
 	}
 
 	public void Destroy()

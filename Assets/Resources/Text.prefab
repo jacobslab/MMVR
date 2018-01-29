@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   associatedObj: {fileID: 0}
+  assignedIndex: 0
 --- !u!114 &114627545826015220
 MonoBehaviour:
   m_ObjectHideFlags: 1

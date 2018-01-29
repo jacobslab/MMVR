@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class SpawnSelect : MonoBehaviour,IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler {
+public class SpawnSelect : InteractableUIElement {
 
 	public GameObject associatedObj;
-	private bool selected=false;
 	public int assignedIndex=0;
 	private Text textComp;
 	// Use this for initialization
@@ -16,21 +15,15 @@ public class SpawnSelect : MonoBehaviour,IPointerEnterHandler, IPointerDownHandl
 	
 	// Update is called once per frame
 	void Update () {
-		if (selected) {
-			
-			if (Input.GetKeyDown (KeyCode.Backspace)) {
-				
-				DestroyObject ();
-			}
-		}
+		
 	}
 	public void OnPointerEnter( PointerEventData eventData )
 	{
 	}
-	public void OnPointerDown( PointerEventData eventData )
+	public override void OnPointerDown( PointerEventData eventData )
 	{
 //		Debug.Log ("click the text");
-		SelectTextObject();
+		SelectObject();
 
 		//make the selected index of hierarchy equal to your assigned index
 		ObjectPanelManager.selectedIndex = assignedIndex;
@@ -54,21 +47,17 @@ public class SpawnSelect : MonoBehaviour,IPointerEnterHandler, IPointerDownHandl
 
 
 
-	public void SelectTextObject()
+	public override void SelectObject()
 	{
 		textComp.color = Color.red;
 		selected = true;
 		EditorCamController.Instance.SetSelectedObject (associatedObj);
 	}
 
-	public void DeselectTextObject()
+	public override void DeselectObject()
 	{
 		textComp.color = Color.black;
 		selected = false;
 	}
 
-	public void OnPointerExit( PointerEventData eventData )
-	{
-		DeselectTextObject ();
-	}
 }

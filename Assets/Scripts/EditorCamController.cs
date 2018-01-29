@@ -61,20 +61,15 @@ public class EditorCamController : MonoBehaviour {
 	{
 		for (int i = 0; i < spawnToJson.Count; i++) {
 			SpawnableObject respawnedObj= JsonUtility.FromJson<SpawnableObject> (spawnToJson[i]);
-			SpawnableObject newObj;
 			if (hierarchyManager.spawnedObjList [i].gameObj == null) {
 				switch (respawnedObj.objType) {
 				case SpawnableObject.ObjectType.Cube:
 					//Debug.Log ("respawning cube");
-					newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos, respawnedObj.rot, SpawnableObject.ObjectType.Cube);
-					newObj.gameObj.GetComponent<Renderer> ().material.color = Color.red;
-					hierarchyManager.spawnedObjList.Add (newObj);
+					placeManager.CreateCube(respawnedObj.objName,respawnedObj.pos, respawnedObj.rot);
 					break;
 				case SpawnableObject.ObjectType.Character:
 					//Debug.Log ("respawning character");
-					newObj = new SpawnableObject (respawnedObj.objName, respawnedObj.pos, respawnedObj.rot, SpawnableObject.ObjectType.Character);
-					newObj.gameObj.GetComponent<Renderer> ().material.color = Color.green;
-					hierarchyManager.spawnedObjList.Add (newObj);
+					placeManager.CreateCharacter(respawnedObj.objName,respawnedObj.pos, respawnedObj.rot);
 					break;
 
 				}

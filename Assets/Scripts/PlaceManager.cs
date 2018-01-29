@@ -48,6 +48,18 @@ public class PlaceManager : MonoBehaviour {
 		cubeIndex++;
 	}
 
+	public void CreateCube(string name, Vector3 pos, Vector3 rot)
+	{
+		SpawnableObject newObj = new SpawnableObject (name, pos, rot ,SpawnableObject.ObjectType.Cube);
+		newObj.gameObj.GetComponent<Renderer> ().material.color = Color.red;
+		//GameObject newCube = Instantiate (cubePrefab, Camera.main.transform.position + Camera.main.transform.forward * 10f, Quaternion.identity) as GameObject;
+		//newCube.GetComponent<Renderer> ().material.color = Color.red;
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject (name,newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		cubeIndex++;
+	}
+
 	public void CreateCharacter()
 	{
 		string name = "character_" + charIndex.ToString ();
@@ -57,8 +69,15 @@ public class PlaceManager : MonoBehaviour {
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
 		charIndex++;
-
-		//spawnedObjList.Add (newCube);
+	}
+	public void CreateCharacter(string name, Vector3 pos, Vector3 rot)
+	{
+		SpawnableObject newObj = new SpawnableObject (name,pos, rot ,SpawnableObject.ObjectType.Character);
+		newObj.gameObj.GetComponent<Renderer> ().material.color = Color.green;
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject (name,newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		charIndex++;
 	}
 
 }

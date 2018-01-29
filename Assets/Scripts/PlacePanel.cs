@@ -48,9 +48,9 @@ public class PlacePanel : InteractableUIElement {
 
 	public override void OnDrag(PointerEventData data)
 	{
-		GetComponent<RectTransform>().anchoredPosition3D = Camera.main.ScreenToViewportPoint (new Vector3(Input.mousePosition.x,Input.mousePosition.y,10f));
+		GetComponent<RectTransform>().anchoredPosition3D = Camera.main.ScreenToViewportPoint (GetMousePosInWorldCoords());
 		GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (GetComponent<RectTransform> ().anchoredPosition3D.x * Screen.width, GetComponent<RectTransform> ().anchoredPosition3D.y * Screen.height);
-		lastDraggedPos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 10f));
+		lastDraggedPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
 	}
 
 	public override void OnEndDrag(PointerEventData data)

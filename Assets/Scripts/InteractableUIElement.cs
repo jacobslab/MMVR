@@ -66,4 +66,10 @@ public class InteractableUIElement:  MonoBehaviour,IPointerEnterHandler,IPointer
 	{
 		DeselectObject ();
 	}
+
+	public Vector3 GetMousePosInWorldCoords()
+	{
+		Vector3 res= new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 10f);
+		return res;
+	}
 }

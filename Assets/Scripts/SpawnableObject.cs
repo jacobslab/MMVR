@@ -14,8 +14,6 @@ public class SpawnableObject {
 		Cube,
 		Character,
 		BoxObject,
-		CharPrefab,
-		CubePrefab,
 		Text,
 
 	}

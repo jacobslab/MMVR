@@ -14,7 +14,21 @@ public class PlaceManager : MonoBehaviour {
 
 	private int cubeIndex=0;
 	private int charIndex=0;
+	//EXPERIMENT IS A SINGLETON
+	private static PlaceManager _instance;
+	public static PlaceManager Instance{
+		get{
+			return _instance;
+		}
+	}
 
+	void Awake(){
+		if (_instance != null) {
+			Debug.Log ("Instance already exists!");
+			return;
+		}
+		_instance = this;
+	}
 	// Use this for initialization
 	void Start () {
 	}
@@ -35,10 +49,10 @@ public class PlaceManager : MonoBehaviour {
 		//spawnedObjList.Add (instObj);
 	}
 
-	public void CreateCube()
+	public void CreateCube(Vector3 pos)
 	{
 		string name = "cube_" + cubeIndex.ToString ();
-		SpawnableObject newObj = new SpawnableObject (name, Camera.main.transform.position + Camera.main.transform.forward * 10f,Vector3.zero,SpawnableObject.ObjectType.Cube);
+		SpawnableObject newObj = new SpawnableObject (name, pos,Vector3.zero,SpawnableObject.ObjectType.Cube);
 		newObj.gameObj.GetComponent<Renderer> ().material.color = Color.red;
 		//GameObject newCube = Instantiate (cubePrefab, Camera.main.transform.position + Camera.main.transform.forward * 10f, Quaternion.identity) as GameObject;
 		//newCube.GetComponent<Renderer> ().material.color = Color.red;
@@ -60,10 +74,10 @@ public class PlaceManager : MonoBehaviour {
 		cubeIndex++;
 	}
 
-	public void CreateCharacter()
+	public void CreateCharacter(Vector3 pos)
 	{
 		string name = "character_" + charIndex.ToString ();
-		SpawnableObject newObj = new SpawnableObject (name, Camera.main.transform.position + Camera.main.transform.forward * 10f,Vector3.zero,SpawnableObject.ObjectType.Character);
+		SpawnableObject newObj = new SpawnableObject (name, pos,Vector3.zero,SpawnableObject.ObjectType.Character);
 		newObj.gameObj.GetComponent<Renderer> ().material.color = Color.green;
 		hierarchyManager.spawnedObjList.Add (newObj);
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);

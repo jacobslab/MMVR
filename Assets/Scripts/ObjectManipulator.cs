@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectManipulator : MonoBehaviour {
 	EditorCamController editorController { get { return EditorCamController.Instance; }}
+
+	public SpawnableObject.ObjectType objType;
 	bool mouseDown=false;
 	Color originalColor;
 	// Use this for initialization

@@ -27,6 +27,7 @@ public class EditorManager : MonoBehaviour {
 			newPlacePanel.transform.parent = placePanelParent.transform;
 			newPlacePanel.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (-39.1f,(i * -90f), 0f);
 			newPlacePanel.GetComponent<PlacePanel> ().SetupPanel (placeableObjArr [i].gameObject.name, placeableSpriteArr [i]);
+			newPlacePanel.GetComponent<PlacePanel> ().objectType = placeableObjArr [i].GetComponent<ObjectManipulator> ().objType;
 		}
 	}
 }

@@ -8,6 +8,8 @@ public class PlacePanel : InteractableUIElement {
 	public Image previewImage; 
 	public Transform originalParent;
 	public Vector3 originalAnchoredPos3D;
+	public SpawnableObject.ObjectType objectType;
+	private Vector3 lastDraggedPos;
 	public Text objName;
 	// Use this for initialization
 	void Start () {
@@ -43,18 +45,34 @@ public class PlacePanel : InteractableUIElement {
 		selected = true;
 		Debug.Log("They started dragging " + this.name);
 	}
-	public override void OnEndDrag(PointerEventData data)
-	{
 
-		Debug.Log ("deselected:" + gameObject.name);
-		selected = false;
-		DropBackToPanel ();
-	}
 	public override void OnDrag(PointerEventData data)
 	{
 		GetComponent<RectTransform>().anchoredPosition3D = Camera.main.ScreenToViewportPoint (new Vector3(Input.mousePosition.x,Input.mousePosition.y,10f));
 		GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (GetComponent<RectTransform> ().anchoredPosition3D.x * Screen.width, GetComponent<RectTransform> ().anchoredPosition3D.y * Screen.height);
-
+		lastDraggedPos = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 10f));
 	}
+
+	public override void OnEndDrag(PointerEventData data)
+	{
+		DropSpawnObject ();
+		Debug.Log ("deselected:" + gameObject.name);
+		selected = false;
+		DropBackToPanel ();
+	}
+
+	void DropSpawnObject()
+	{
+		switch (objectType) {
+		case SpawnableObject.ObjectType.Cube:
+			PlaceManager.Instance.CreateCube (lastDraggedPos);
+			break;
+		case SpawnableObject.ObjectType.Character:
+			PlaceManager.Instance.CreateCharacter (lastDraggedPos);
+			break;
+		
+		}
+	}
+
 
 }

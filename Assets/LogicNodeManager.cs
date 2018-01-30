@@ -9,11 +9,14 @@ public class LogicNodeManager : MonoBehaviour {
 	public Transform logicParent;
 	public List<GameObject> functionBoxList;
 
+	public List<GameObject> utilityList;
+
 
 	private int index;
 	// Use this for initialization
 	void Start () {
 		functionBoxList = new List<GameObject> ();
+//		utilityList = new List<GameObject> ();
 	}
 	
 	// Update is called once per frame
@@ -32,11 +35,10 @@ public class LogicNodeManager : MonoBehaviour {
 
 	public void CreateUtilityBox(int utilityType)
 	{
-		GameObject spawnedBox = Instantiate(utilityBoxPrefab,Camera.main.ScreenToWorldPoint(UtilityFunctions.GetMousePosInWorldCoords()),Quaternion.identity) as GameObject;
-		spawnedBox.transform.SetParent(logicParent,false);
 		switch (utilityType) {
 		case 0:
-			spawnedBox.GetComponent<UtilityBox> ().SetupUtilityBox ("Print String", UtilityBox.UtilityType.PrintString);
+			GameObject spawnedBox = Instantiate(utilityList[utilityType],Camera.main.ScreenToWorldPoint(UtilityFunctions.GetMousePosInWorldCoords()),Quaternion.identity) as GameObject;
+			spawnedBox.transform.SetParent(logicParent,false);
 			break;
 		}
 	}

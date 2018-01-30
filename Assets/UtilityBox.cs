@@ -8,22 +8,19 @@ public class UtilityBox : InteractableUIElement {
 	public Text utilityNameText;
 	public Transform canvasTransform;
 
-	public List<Object> arguments;
+	public GameObject functionConnectedTo;
+	public List<GameObject> arguments;
+	public List<Transform> argTransforms;
+	public IEnumerator coroutineToBeExecuted;
 	public enum InputDataType
 	{
 		Str,
 		Int
 	}
-	public enum UtilityType
-	{
-		PrintString
-
-	}
 
 	// Use this for initialization
 	void Start () {
-		canvasTransform = GameObject.FindGameObjectWithTag("Canvas").transform;
-		arguments = new List<Object> ();
+		
 	}
 	
 	// Update is called once per frame
@@ -31,20 +28,17 @@ public class UtilityBox : InteractableUIElement {
 		
 	}
 
-	public void SetupUtilityBox(string name,UtilityType utilityType)
+	void AddInputs (int numInputs, string inputName, InputDataType inputDataType)
 	{
-		utilityNameText.text = name;
-		switch (utilityType) {
-		case UtilityType.PrintString:
-			//add input
-			AddInputs(1,"to be printed",InputDataType.Str);
-			//add function
+		switch (inputDataType) {
+		case InputDataType.Str:
+			for (int i = 0; i < numInputs; i++) {
+				GameObject newObj = new GameObject();
+				newObj.transform.parent = this.transform;
+				newObj.AddComponent<InputField> ();
+			}
 			break;
 		}
-	}
-
-	void AddInputs (int numInputs, string inputNmae, InputDataType inputDataType)
-	{
 //		for (int i = 0; i < numInputs; i++) {
 //			switch (inputDataType[i]) {
 //			case InputDataType.Str:
@@ -52,6 +46,12 @@ public class UtilityBox : InteractableUIElement {
 //				break;
 //			}
 //		}
+	}
+
+	public virtual void AddCoroutineTo(GameObject functionAskingToBeConnected)
+	{
+		functionConnectedTo.GetComponent<FunctionBox> ().AddToSequence (coroutineToBeExecuted);
+		Debug.Log ("added coroutine to the function");
 	}
 
 	public override void OnPointerEnter(PointerEventData eventData)

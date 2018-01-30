@@ -8,22 +8,20 @@ public class FunctionBox : InteractableUIElement {
 	private List<IEnumerator> activeSequence;
 	public Transform canvasTransform;
 
+	private bool outConnecting=false;
+	private Vector3 lastDraggedPos;
+
+	public List<UtilityBox> utilitiesConnected;
+
 	// Use this for initialization
 	void Start () {
 		canvasTransform = GameObject.FindGameObjectWithTag("Canvas").transform;
 		activeSequence = new List<IEnumerator> ();
+		utilitiesConnected = new List<UtilityBox> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.R)) {
-			Debug.Log ("added OK");
-			AddToSequence (PrintCoroutine("OK"));
-		}
-		if (Input.GetKeyDown (KeyCode.A)) {
-			Debug.Log ("added THEN");
-			AddToSequence (PrintCoroutine ("THEN"));
-		}
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			ExecuteSequence ();
 		}
@@ -36,7 +34,11 @@ public class FunctionBox : InteractableUIElement {
 
 	void ExecuteSequence()
 	{
-		Debug.Log ("executing sequence");
+		//add to the sequence
+		for (int j = 0; j < utilitiesConnected.Count; j++) {
+			utilitiesConnected [j].AddCoroutineTo (this.gameObject);
+		}
+		//then execute the sequence
 		IEnumerator[] seqArr = new IEnumerator[activeSequence.Count];
 		for (int i = 0; i < activeSequence.Count; i++) {
 			seqArr [i] = activeSequence [i];
@@ -62,9 +64,25 @@ public class FunctionBox : InteractableUIElement {
 		yield return new WaitForSeconds(0.3f);
 	}
 
-	void AddToSequence(IEnumerator coroutineToBeAdded)
+	public void AddToSequence(IEnumerator coroutineToBeAdded)
 	{
 		activeSequence.Add (coroutineToBeAdded);
+	}
+
+	public void OutButtonPressed()
+	{
+		outConnecting = true;
+	}
+
+	void CheckForUtilityConnection(GameObject droppedObj)
+	{
+		Debug.Log ("dropped object is : " + droppedObj.name);
+		if (droppedObj.tag == "UtilityBox") {
+			Debug.Log("connected with utilitybox");
+			droppedObj.GetComponent<UtilityBox> ().functionConnectedTo = this.gameObject;
+//			droppedObj.GetComponent<UtilityBox> ().AddCoroutineTo (this.gameObject);
+			utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox>());
+		}
 	}
 
 
@@ -80,11 +98,16 @@ public class FunctionBox : InteractableUIElement {
 	public override void OnEndDrag(PointerEventData data)
 	{
 		Debug.Log("Stopped dragging " + this.name);
+		CheckForUtilityConnection (data.pointerEnter);
+		if (outConnecting)
+			outConnecting = false;
 	}
 	public override void OnDrag(PointerEventData data)
 	{
-		GetComponent<RectTransform>().anchoredPosition3D = Camera.main.ScreenToViewportPoint (GetMousePosInWorldCoords());
-		GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (GetComponent<RectTransform> ().anchoredPosition3D.x * Screen.width, GetComponent<RectTransform> ().anchoredPosition3D.y * Screen.height);
-		//		lastDraggedPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
+		if (data.pointerPress == this.gameObject) {
+			GetComponent<RectTransform> ().anchoredPosition3D = Camera.main.ScreenToViewportPoint (GetMousePosInWorldCoords ());
+			GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (GetComponent<RectTransform> ().anchoredPosition3D.x * Screen.width, GetComponent<RectTransform> ().anchoredPosition3D.y * Screen.height);
+			lastDraggedPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords ());
+		}
 	}
 }

@@ -20,7 +20,7 @@ public class PrintString_UBox : UtilityBox {
 	public override void AddCoroutineTo(GameObject functionAskingToBeConnected)
 	{
 		functionConnectedTo.GetComponent<FunctionBox> ().AddToSequence (PrintString(textInput.text));
-		Debug.Log ("added to the function");
+		//Debug.Log ("added to the function");
 	}
 
 	IEnumerator PrintString(string toBePrinted)

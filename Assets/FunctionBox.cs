@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class FunctionBox : InteractableUIElement {
 	public Text funcNameText;
-	private List<IEnumerator> activeSequence;
+	public List<IEnumerator> activeSequence;
+	private GameObject utilityConnectedTo;
 	public Transform canvasTransform;
 
 	private bool outConnecting=false;
@@ -22,17 +23,15 @@ public class FunctionBox : InteractableUIElement {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Return)) {
-			ExecuteSequence ();
-		}
 	}
 
 	public void SetupFunctionBox(string name)
 	{
+		gameObject.name = name;
 		funcNameText.text = name; 
 	}
 
-	void ExecuteSequence()
+	public IEnumerator ExecuteSequence()
 	{
 		//add to the sequence
 		for (int j = 0; j < utilitiesConnected.Count; j++) {
@@ -44,12 +43,13 @@ public class FunctionBox : InteractableUIElement {
 			seqArr [i] = activeSequence [i];
 		}
 //		activeSequence.Clear ();
-		Debug.Log(seqArr[0]);
-		StartCoroutine(Sequence (seqArr));
+		//Debug.Log(seqArr[0]);
+		yield return StartCoroutine(Sequence (seqArr));
+		yield return null;
 	}
 	public static IEnumerator Sequence(params IEnumerator[] sequence)
 	{
-		Debug.Log ("inside sequence " + " with length " + sequence.Length.ToString());
+		//Debug.Log ("inside sequence " + " with length " + sequence.Length.ToString());
 		for(int i = 0 ; i < sequence.Length; ++i)
 		{
 			while(sequence[i].MoveNext())
@@ -76,12 +76,22 @@ public class FunctionBox : InteractableUIElement {
 
 	void CheckForUtilityConnection(GameObject droppedObj)
 	{
-		Debug.Log ("dropped object is : " + droppedObj.name);
-		if (droppedObj.tag == "UtilityBox") {
-			Debug.Log("connected with utilitybox");
-			droppedObj.GetComponent<UtilityBox> ().functionConnectedTo = this.gameObject;
+		if (droppedObj != null) {
+			//Debug.Log ("dropped object is : " + droppedObj.name);
+			if (droppedObj.tag == "UtilityBox") {
+				//Debug.Log ("connected with utilitybox");
+				droppedObj.GetComponent<UtilityBox> ().functionConnectedTo = this.gameObject;
 //			droppedObj.GetComponent<UtilityBox> ().AddCoroutineTo (this.gameObject);
-			utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox>());
+
+				//only add if it hasn't already been added before to this function
+				bool foundMatch = false;
+				for (int i = 0; i < utilitiesConnected.Count; i++) {
+					if (utilitiesConnected [i] == droppedObj.GetComponent<UtilityBox> ())
+						foundMatch = true;
+				}
+				if(!foundMatch)
+					utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox> ());
+			}
 		}
 	}
 
@@ -93,11 +103,11 @@ public class FunctionBox : InteractableUIElement {
 	}
 	public override void OnBeginDrag(PointerEventData data)
 	{
-		Debug.Log("They started dragging " + this.name);
+		//Debug.Log("They started dragging " + this.name);
 	}
 	public override void OnEndDrag(PointerEventData data)
 	{
-		Debug.Log("Stopped dragging " + this.name);
+		//Debug.Log("Stopped dragging " + this.name);
 		CheckForUtilityConnection (data.pointerEnter);
 		if (outConnecting)
 			outConnecting = false;

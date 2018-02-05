@@ -13,6 +13,11 @@ public class FunctionBox : InteractableUIElement {
 	private Vector3 lastDraggedPos;
 
 	public List<UtilityBox> utilitiesConnected;
+	public GameObject utilityDropdownPrefab;
+
+	//PIN BUTTONS
+	public Button inPin;
+	public Button outPin;
 
 	// Use this for initialization
 	void Start () {
@@ -76,10 +81,13 @@ public class FunctionBox : InteractableUIElement {
 
 	void CheckForUtilityConnection(GameObject droppedObj)
 	{
+		GameObject droppedPin;
 		if (droppedObj != null) {
 			//Debug.Log ("dropped object is : " + droppedObj.name);
-			if (droppedObj.tag == "UtilityBox") {
-				//Debug.Log ("connected with utilitybox");
+			if (droppedObj.name.Contains("InPin")) {
+				droppedPin = droppedObj;
+				droppedObj = droppedObj.transform.parent.gameObject;
+				Debug.Log ("connected with utilitybox");
 				droppedObj.GetComponent<UtilityBox> ().functionConnectedTo = this.gameObject;
 //			droppedObj.GetComponent<UtilityBox> ().AddCoroutineTo (this.gameObject);
 
@@ -89,10 +97,14 @@ public class FunctionBox : InteractableUIElement {
 					if (utilitiesConnected [i] == droppedObj.GetComponent<UtilityBox> ())
 						foundMatch = true;
 				}
-				if(!foundMatch)
+				if (!foundMatch) {
 					utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox> ());
+					droppedPin.GetComponent<Image> ().color = Color.gray;
+					outPin.GetComponent<Image> ().color = Color.gray;
+				}
 			}
 		}
+	
 	}
 
 

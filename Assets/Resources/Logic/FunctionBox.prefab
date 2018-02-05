@@ -376,6 +376,10 @@ MonoBehaviour:
   selected: 0
   funcNameText: {fileID: 114543581206066326}
   canvasTransform: {fileID: 0}
+  utilitiesConnected: []
+  utilityDropdownPrefab: {fileID: 0}
+  inPin: {fileID: 114707273045200958}
+  outPin: {fileID: 114516129303154354}
 --- !u!114 &114765150754300310
 MonoBehaviour:
   m_ObjectHideFlags: 1

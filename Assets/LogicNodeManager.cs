@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 public class LogicNodeManager : MonoBehaviour {
 
 	public GameObject functionBoxPrefab;
@@ -10,6 +11,7 @@ public class LogicNodeManager : MonoBehaviour {
 	public List<GameObject> functionBoxList;
 
 	public GameObject[] utilityList;
+	public Dropdown utilityDropdown;
 
 	public List<FunctionBox> funcSequence;
 
@@ -63,13 +65,9 @@ public class LogicNodeManager : MonoBehaviour {
 		index++;
 	}
 
-	public void CreateUtilityBox(int utilityType)
+	public void CreateUtilityBox()
 	{
-		switch (utilityType) {
-		case 0:
-			GameObject spawnedBox = Instantiate(utilityList[utilityType],Camera.main.ScreenToWorldPoint(UtilityFunctions.GetMousePosInWorldCoords()),Quaternion.identity) as GameObject;
+			GameObject spawnedBox = Instantiate(utilityList[utilityDropdown.value],Camera.main.ScreenToWorldPoint(UtilityFunctions.GetMousePosInWorldCoords()),Quaternion.identity) as GameObject;
 			spawnedBox.transform.SetParent(logicParent,false);
-			break;
-		}
 	}
 }

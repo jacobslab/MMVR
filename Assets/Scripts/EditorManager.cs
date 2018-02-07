@@ -20,13 +20,13 @@ public class EditorManager : MonoBehaviour {
 	void PopulatePlacePanel()
 	{
 		GameObject[] placeableObjArr = Resources.LoadAll<GameObject> ("Placeables");
-		Sprite[] placeableSpriteArr = Resources.LoadAll<Sprite> ("PlaceableImages");
+//		Sprite[] placeableSpriteArr = Resources.LoadAll<Sprite> ("PlaceableImages");
 		Debug.Log ("count:" + placeableObjArr.Length.ToString ());
 		for (int i = 0; i < placeableObjArr.Length; i++) {
 			GameObject newPlacePanel = Instantiate (placeablePanel, Vector3.zero, Quaternion.identity) as GameObject;
 			newPlacePanel.transform.parent = placePanelParent.transform;
 			newPlacePanel.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (-39.1f,(i * -90f), 0f);
-			newPlacePanel.GetComponent<PlacePanel> ().SetupPanel (placeableObjArr [i].gameObject.name, placeableSpriteArr [i]);
+			newPlacePanel.GetComponent<PlacePanel> ().SetupPanel (placeableObjArr [i].gameObject.name,placeableObjArr [i]);
 			newPlacePanel.GetComponent<PlacePanel> ().objectType = placeableObjArr [i].GetComponent<ObjectManipulator> ().objType;
 		}
 	}

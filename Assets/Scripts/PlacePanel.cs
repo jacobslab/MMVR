@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEditor;
 public class PlacePanel : InteractableUIElement {
 	public Transform canvasTransform;
-	public Image previewImage; 
+	public RawImage previewImage; 
 	public Transform originalParent;
 	public Vector3 originalAnchoredPos3D;
 	public SpawnableObject.ObjectType objectType;
@@ -24,10 +25,10 @@ public class PlacePanel : InteractableUIElement {
 	}
 
 	//use this to setup the place panel
-	public void SetupPanel(string name, Sprite chosenImage)
+	public void SetupPanel(string name,GameObject gameObj)
 	{
 		objName.text = name;
-		previewImage.sprite = chosenImage;
+//		previewImage.texture = AssetPreview.GetAssetPreview (gameObj);
 	}
 
 	public override void OnPointerEnter(PointerEventData eventData)

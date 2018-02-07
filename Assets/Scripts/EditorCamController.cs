@@ -134,6 +134,11 @@ public class EditorCamController : MonoBehaviour {
 		yield return null;
 	}
 
+	public void BeginDestroyProcess()
+	{
+		StartCoroutine("DestroyObject");
+	}
+
 	public void Destroy()
 	{
 		

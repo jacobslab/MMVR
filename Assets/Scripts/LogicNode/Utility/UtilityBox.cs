@@ -21,8 +21,9 @@ public class UtilityBox : InteractableUIElement {
 		
 	public GameObject inPin;
 	public GameObject outPin;
-
+	RectTransform rt;
 	public GameObject currentlyDraggedPin;
+	public Vector3 lastClickedPos;
 	// Use this for initialization
 	void Start () {
 
@@ -30,13 +31,25 @@ public class UtilityBox : InteractableUIElement {
 		canvasTransform = GameObject.FindGameObjectWithTag("Canvas").transform;
 		arguments = new List<GameObject> ();
 		Debug.Log (transform.position.ToString ());
+		rt = GetComponent<RectTransform>();
+		DisplayWorldCorners();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+	void DisplayWorldCorners()
+	{
+		Vector3[] v = new Vector3[4];
+		rt.GetWorldCorners(v);
 
+		Debug.Log("World Corners");
+		for (var i = 0; i < 4; i++)
+		{
+			Debug.Log("World Corner " + i + " : " + v[i]);
+		}
+	}
 	void AddInputs (int numInputs, string inputName, InputDataType inputDataType)
 	{
 		switch (inputDataType) {

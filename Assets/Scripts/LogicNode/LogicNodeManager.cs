@@ -39,6 +39,7 @@ public class LogicNodeManager : MonoBehaviour {
 		return sortedCompList;
 	}
 
+	//executed by button "EXECUTE BUTTON"
 	public void ExecuteLogic()
 	{
 		funcSequence = CreateSequenceOfFunctionBox ();

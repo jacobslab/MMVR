@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine;
+using UnityEditor;
 public class Branch_UBox : UtilityBox{
 
 	private GameObject activePin;
@@ -28,9 +30,7 @@ public class Branch_UBox : UtilityBox{
 				droppedPin = droppedObj;
 				droppedObj = droppedObj.transform.parent.gameObject;
 				//Debug.Log ("connected with utilitybox");
-				//chain the function you're connected to the utility you're connecting with
 				droppedObj.GetComponent<UtilityBox> ().functionConnectedTo = functionConnectedTo;
-				//			droppedObj.GetComponent<UtilityBox> ().AddCoroutineTo (this.gameObject);
 
 				//only add if it hasn't already been added before to this function
 				bool foundMatch = false;
@@ -55,9 +55,11 @@ public class Branch_UBox : UtilityBox{
 	{
 		if (data.pointerPress.name == "TruePin" || data.pointerPress.name == "FalsePin") {
 			currentlyDraggedPin = data.pointerPress;
+			lastClickedPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
 		}
 		Debug.Log("Dragged pin " + data.pointerPress.name);
 	}
+
 	IEnumerator Branch(bool condition)
 	{
 		bool foundMatch = false;
@@ -65,23 +67,11 @@ public class Branch_UBox : UtilityBox{
 		if (condition) {
 			activePin = truePin;
 			Debug.Log ("IT'S TRUE");
-//			for (int i = 0; i < functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected.Count; i++) {
-//				if (functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected [i] == trueConnectedToUtility)
-//					foundMatch = true;
-//			}
-//			if (!foundMatch) {
 			yield return StartCoroutine(trueConnectedToUtility.ExecuteCoroutine());
 //			}
 		} else {
 			Debug.Log ("it's false");
-//			for (int i = 0; i < functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected.Count; i++) {
-//				if (functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected [i] == falseConnectedToUtility)
-//					foundMatch = true;
-//			}
-//			if (!foundMatch) {
-
-			yield return StartCoroutine(falseConnectedToUtility.ExecuteCoroutine());
-//			}
+			yield return  (falseConnectedToUtility.ExecuteCoroutine());
 			activePin = falsePin;
 		}
 		yield return null;

@@ -19,6 +19,7 @@ public class FunctionBox : InteractableUIElement {
 	public Button inPin;
 	public Button outPin;
 
+	Vector3 lastClickedPos;
 	Vector3 startPos;
 	Vector3 endPos;
 
@@ -82,12 +83,12 @@ public class FunctionBox : InteractableUIElement {
 		startPos=Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords ());
 	}
 
-	void CheckForUtilityConnection(GameObject droppedObj)
+	bool CheckForUtilityConnection(GameObject droppedObj)
 	{
 		GameObject droppedPin;
 		if (droppedObj != null) {
 			//Debug.Log ("dropped object is : " + droppedObj.name);
-			if (droppedObj.name.Contains("InPin")) {
+			if (droppedObj.name.Contains ("InPin")) {
 				droppedPin = droppedObj;
 				droppedObj = droppedObj.transform.parent.gameObject;
 				Debug.Log ("connected with utilitybox");
@@ -100,13 +101,20 @@ public class FunctionBox : InteractableUIElement {
 					if (utilitiesConnected [i] == droppedObj.GetComponent<UtilityBox> ())
 						foundMatch = true;
 				}
+
 				if (!foundMatch) {
 					utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox> ());
 					droppedPin.GetComponent<Image> ().color = Color.gray;
 					outPin.GetComponent<Image> ().color = Color.gray;
 					endPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords ());
+					return true;
+				} else {
+					return false;
 				}
-			}
+			} else
+				return false;
+		} else {
+			return false;
 		}
 	
 	}
@@ -120,11 +128,12 @@ public class FunctionBox : InteractableUIElement {
 	public override void OnBeginDrag(PointerEventData data)
 	{
 		//Debug.Log("They started dragging " + this.name);
+		lastClickedPos =  Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
 	}
 	public override void OnEndDrag(PointerEventData data)
 	{
 		//Debug.Log("Stopped dragging " + this.name);
-		CheckForUtilityConnection (data.pointerEnter);
+		bool result=CheckForUtilityConnection (data.pointerEnter);
 		if (outConnecting)
 			outConnecting = false;
 	}

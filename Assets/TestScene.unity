@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 62ece6c60944e664c8464cd77cefdfa9, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.57482487, a: 1}
+  m_IndirectSpecularColor: {r: 0.5442357, g: 0.5214111, b: 0.5339491, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -776,6 +776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sandBoxCamera: {fileID: 860656070}
+  propertyPanelGroup: {fileID: 1936050229}
 --- !u!1 &374049979
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,6 +845,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 374049979}
+--- !u!4 &396722003 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1882835975}
 --- !u!1 &403007302
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +863,7 @@ GameObject:
   - component: {fileID: 403007305}
   - component: {fileID: 403007304}
   m_Layer: 5
-  m_Name: Create Terrain
+  m_Name: Set Skybox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,7 +887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -258.79382, y: 393.96252}
+  m_AnchoredPosition: {x: -220, y: 393.96252}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &403007304
@@ -925,7 +931,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 25771462}
-        m_MethodName: CreateTerrain
+        m_MethodName: SetSkybox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1825,7 +1831,7 @@ Camera:
   m_GameObject: {fileID: 860656065}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -3371,7 +3377,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 581056297}
   m_HandleRect: {fileID: 581056296}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3449,7 +3455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80.000015, y: 0}
+  m_AnchoredPosition: {x: -80.000015, y: -0.000025749207}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1785530770
@@ -3546,6 +3552,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1880653272}
+--- !u!1001 &1882835975
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1936050225}
+    m_Modifications:
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564822309126160, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9fcda8846e7e54cb493bc37dd5e4611e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1905630548
 GameObject:
   m_ObjectHideFlags: 0
@@ -3751,6 +3799,7 @@ GameObject:
   - component: {fileID: 1936050227}
   - component: {fileID: 1936050226}
   - component: {fileID: 1936050228}
+  - component: {fileID: 1936050229}
   m_Layer: 5
   m_Name: PropertyPanel
   m_TagString: Untagged
@@ -3769,6 +3818,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 624503086}
+  - {fileID: 396722003}
   m_Father: {fileID: 1721660546}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3821,8 +3871,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006d8c4ab677146cf80b3eee451ba378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skyboxPropertiesPrefab: {fileID: 1737771826907362, guid: 9fcda8846e7e54cb493bc37dd5e4611e,
+    type: 2}
   terrainPropertiesPrefab: {fileID: 1041123100302416, guid: cff9a9901ee444bdeb36025d270d83eb,
     type: 2}
+--- !u!225 &1936050229
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1936050224}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1981982548
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,7 +3923,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 48.518677, y: 393.96252}
+  m_AnchoredPosition: {x: 0, y: 393.96252}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1981982550
@@ -4092,7 +4155,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74f11f99742464d4896272068b53b670, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a30ef447cc842464cb46bdba03388c2b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4143,7 +4206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -105.13757, y: 393.96252}
+  m_AnchoredPosition: {x: -110, y: 393.96252}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2028759547

@@ -42,7 +42,8 @@ public class SpawnableObject {
 		gameObj.transform.position = pos;
 		gameObj.transform.eulerAngles = rot;
 		gameObj.name = objName;
-		gameObj.AddComponent<ObjectManipulator> ();
+		if (objType != ObjectType.Terrain)
+			gameObj.AddComponent<ObjectManipulator> ();
 		objType = ObjectType.Cube;
 
 	}

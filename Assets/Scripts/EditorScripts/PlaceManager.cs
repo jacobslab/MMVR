@@ -55,6 +55,10 @@ public class PlaceManager : MonoBehaviour {
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Terrain,newObj.gameObj);
 
 	}
+	public void SetSkybox()
+	{
+		propertyManager.SwitchToPanel ("skybox");
+	}
 
 	public void CreateCube(Vector3 pos)
 	{

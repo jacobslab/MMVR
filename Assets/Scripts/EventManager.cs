@@ -14,6 +14,7 @@ public class EventManager : MonoBehaviour {
 	public delegate void SpawnableEventHandler ();
 	public static event SpawnableEventHandler OnSpawned;
 	public static event SpawnableEventHandler OnDestroyed;
+	public static event SpawnableEventHandler OnInitialSetupComplete;
 		// Invoke the Changed event; called whenever list changes
 		protected virtual void OnChanged(EventArgs e)
 		{
@@ -27,7 +28,11 @@ public class EventManager : MonoBehaviour {
 
 		}
 
-		
+	public static void CompleteSetup()
+	{
+
+		OnInitialSetupComplete ();
+	}
 
 	void Start()
 	{

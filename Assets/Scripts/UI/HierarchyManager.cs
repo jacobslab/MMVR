@@ -14,7 +14,7 @@ public class HierarchyManager : MonoBehaviour {
 		textSpawnableDict = new Dictionary<GameObject, SpawnableObject>();
 		spawnedObjList = new List<SpawnableObject> ();
 		spawnSelectTextObj = new List<GameObject> ();
-		
+		EventManager.CompleteSetup ();
 	}
 
 	public void AddDictEntry(GameObject textObj, SpawnableObject spawnObj)

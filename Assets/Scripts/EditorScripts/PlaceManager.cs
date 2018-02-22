@@ -6,14 +6,19 @@ using UnityEngine.UI;
 
 public class PlaceManager : MonoBehaviour {
 
+	public GameObject terrain;
 	public GameObject cubePrefab;
 	public GameObject charPrefab;
 	[SerializeField]
 	public ObjectPanelManager objPanelManager;
 	public HierarchyManager hierarchyManager;
+	public PropertyPanelManager propertyManager;
 
 	private int cubeIndex=0;
 	private int charIndex=0;
+	public GameObject terrainPrefab;
+	public Terrain terrainData;
+	public Texture2D[] textureArr;
 	//EXPERIMENT IS A SINGLETON
 	private static PlaceManager _instance;
 	public static PlaceManager Instance{
@@ -31,6 +36,7 @@ public class PlaceManager : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
+		EventManager.OnInitialSetupComplete+=CreateTerrain;
 	}
 	
 	// Update is called once per frame
@@ -40,13 +46,14 @@ public class PlaceManager : MonoBehaviour {
 
 	public void CreateTerrain()
 	{
-		
-		TerrainData newTerrainData = new TerrainData ();
-		GameObject newTerrain = new GameObject ();
-		newTerrain = Terrain.CreateTerrainGameObject (newTerrainData);
-		GameObject instObj = Instantiate (newTerrain, Vector3.zero, Quaternion.identity) as GameObject;
-		//objPanelManager.AddTextObject (instObj.name, instObj);
-		//spawnedObjList.Add (instObj);
+		SpawnableObject newObj = new SpawnableObject ("terrain", Vector3.zero,Vector3.zero,SpawnableObject.ObjectType.Terrain);
+
+		terrainData = newObj.gameObj.GetComponent<Terrain> ();
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject ("terrain",newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Terrain,newObj.gameObj);
+
 	}
 
 	public void CreateCube(Vector3 pos)

@@ -17,13 +17,10 @@ public class ObjectManipulator : MonoBehaviour {
 	void Update () {
 		if (mouseDown)
 			transform.position = Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x,Input.mousePosition.y,10f));
-
-
 	}
 
 	void OnMouseDown()
 	{
-		
 			originalColor = gameObject.GetComponent<Renderer> ().material.color;
 			gameObject.GetComponent<Renderer> ().material.color = Color.yellow;
 			gameObject.GetComponent<BoxCollider> ().enabled = false;

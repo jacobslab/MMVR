@@ -11,6 +11,7 @@ public class SpawnableObject {
 	public Vector3 rot;
 	public enum ObjectType
 	{
+		Terrain,
 		Cube,
 		Character,
 		BoxObject,
@@ -31,8 +32,10 @@ public class SpawnableObject {
 			gameObj = GameObject.CreatePrimitive (PrimitiveType.Cube);
 			break;
 		case ObjectType.Character:
-			Debug.Log ("spawned character");
 			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("Shelly"));
+			break;
+		case ObjectType.Terrain:
+			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("TerrainPrefab"));
 			break;
 		}
 

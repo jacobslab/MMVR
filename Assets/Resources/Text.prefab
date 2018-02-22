@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 704768ab719d14e96bb6df571219f62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   associatedObj: {fileID: 0}
   assignedIndex: 0
 --- !u!114 &114627545826015220
@@ -63,12 +64,12 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -96,6 +97,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32, y: 54.769012}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 5.54, y: 44.46}
+  m_SizeDelta: {x: 229.12, y: 50.61}
   m_Pivot: {x: 0.5, y: 0.5}

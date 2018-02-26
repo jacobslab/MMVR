@@ -14,6 +14,10 @@ public class GenericProperties : MonoBehaviour {
 	public InputField yScale;
 	public InputField zScale;
 
+	public Slider rColor;
+	public Slider gColor;
+	public Slider bColor;
+	public Slider aColor;
 	public Toggle enablePhysics;
 	public Toggle enableCollision;
 
@@ -40,6 +44,11 @@ public class GenericProperties : MonoBehaviour {
 		}
 	}
 
+	public void UpdateColors()
+	{
+		associatedObj.GetComponent<Renderer> ().material.color = new Color (rColor.value, gColor.value, bColor.value, aColor.value);
+	}
+
 	public void UpdateTransform()
 	{
 		Debug.Log ("updating transform");
@@ -62,6 +71,11 @@ public class GenericProperties : MonoBehaviour {
 		xScale.text = associatedObj.transform.localScale.x.ToString ();
 		yScale.text = associatedObj.transform.localScale.y.ToString ();
 		zScale.text = associatedObj.transform.localScale.z.ToString ();
+
+		rColor.value = associatedObj.GetComponent<Renderer> ().material.color.r;
+		gColor.value = associatedObj.GetComponent<Renderer> ().material.color.g;
+		bColor.value = associatedObj.GetComponent<Renderer> ().material.color.b;
+		aColor.value = associatedObj.GetComponent<Renderer> ().material.color.a;
 	}
 
 

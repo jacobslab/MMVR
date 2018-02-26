@@ -26,7 +26,6 @@ public class TerrainProperties : MonoBehaviour {
 	void SetTerrainSplatMap(Terrain terrain, Texture2D[] textures)
 	{
 		var terrainData = terrain.terrainData;
-
 		// The Splat map (Textures)
 		SplatPrototype[] splatPrototype = new SplatPrototype[terrainData.splatPrototypes.Length];
 		for (int i = 0; i < terrainData.splatPrototypes.Length; i++)

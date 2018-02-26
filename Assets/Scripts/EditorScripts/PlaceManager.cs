@@ -70,6 +70,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.spawnedObjList.Add (newObj);
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
+		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Cube,newObj.gameObj);
 		cubeIndex++;
 	}
 

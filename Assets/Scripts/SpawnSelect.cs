@@ -52,6 +52,7 @@ public class SpawnSelect : InteractableUIElement {
 		textComp.color = Color.red;
 		selected = true;
 		EditorCamController.Instance.SetSelectedObject (associatedObj);
+
 	}
 
 	public override void DeselectObject()

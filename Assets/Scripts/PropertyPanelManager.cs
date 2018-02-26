@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PropertyPanelManager : MonoBehaviour {
 
+	public GameObject genericPropertiesPrefab;
 	public GameObject skyboxPropertiesPrefab;
 	public GameObject terrainPropertiesPrefab;
 	public Dictionary<string,GameObject> propertyPanelDict;
+	public Vector3 spawnPos;
+	private GameObject currentActivePanel;
 	// Use this for initialization
 	void Start () {
 		propertyPanelDict= new Dictionary<string,GameObject> ();
@@ -22,9 +25,9 @@ public class PropertyPanelManager : MonoBehaviour {
 
 	void AddSkyboxPanel()
 	{
-		GameObject skyboxProperties = Instantiate (skyboxPropertiesPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+		GameObject skyboxProperties = Instantiate (skyboxPropertiesPrefab, spawnPos, Quaternion.identity) as GameObject;
 		skyboxProperties.transform.parent = transform.GetChild (0).transform;
-		skyboxProperties.transform.localPosition = Vector3.zero;
+		skyboxProperties.transform.localPosition =spawnPos;
 		propertyPanelDict.Add ("skybox", skyboxProperties);
 		skyboxProperties.SetActive (false);
 	}
@@ -33,22 +36,36 @@ public class PropertyPanelManager : MonoBehaviour {
 	{
 		switch (objType) {
 		case SpawnableObject.ObjectType.Terrain:
-			GameObject terrainPropertiesObj = Instantiate (terrainPropertiesPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-			terrainPropertiesObj.transform.parent = transform.GetChild (0).transform;
-			terrainPropertiesObj.transform.localPosition = Vector3.zero;
+			GameObject terrainPropertiesObj = CreatePropertyPanel (terrainPropertiesPrefab,associatedObj.name);
 			terrainPropertiesObj.GetComponent<TerrainProperties> ().terrainObj = associatedObj;
-			propertyPanelDict.Add ("terrain", terrainPropertiesObj);
-			terrainPropertiesObj.SetActive (false);
+			break;
+		case SpawnableObject.ObjectType.Cube:
+			GameObject cubePropertiesObj = CreatePropertyPanel (genericPropertiesPrefab, associatedObj.name);
+			cubePropertiesObj.GetComponent<GenericProperties> ().associatedObj = associatedObj;
 			break;
 		}
 	}
 
+	GameObject CreatePropertyPanel(GameObject propertiesPrefab,string keyToAdd)
+	{
+		GameObject propertiesObj = Instantiate (propertiesPrefab, spawnPos, Quaternion.identity) as GameObject;
+		propertiesObj.transform.parent = transform.GetChild (0).transform;
+		propertiesObj.transform.localPosition =spawnPos;
+		propertyPanelDict.Add (keyToAdd, propertiesObj);
+		propertiesObj.SetActive (false);
+		return propertiesObj;
+	}
+
 	public void SwitchToPanel(string panelKey)
 	{
+		Debug.Log ("attempting to switch panels");
+		if (currentActivePanel != null)
+			currentActivePanel.SetActive (false);
 		GameObject resultObj;
 		bool result = propertyPanelDict.TryGetValue (panelKey, out resultObj);
 		if (result) {
 			resultObj.SetActive (true);
+			currentActivePanel = resultObj;
 		}
 	}
 }

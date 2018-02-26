@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 public class EditorCamController : MonoBehaviour {
 	GameObject selectedObj;
 	OrbitMouse mouseOrbit;
@@ -48,6 +49,10 @@ public class EditorCamController : MonoBehaviour {
 	public void SetSelectedObject(GameObject objSelected)
 	{
 		selectedObj = objSelected;
+		string cleanedName = Regex.Replace(objSelected.name, @"[\d-]", string.Empty);
+		cleanedName = Regex.Replace (cleanedName, "[_]", string.Empty);
+
+		placeManager.propertyManager.SwitchToPanel (objSelected.name);
 		if (selectedObj != null)
 			mouseOrbit.target = selectedObj.transform;
 	}

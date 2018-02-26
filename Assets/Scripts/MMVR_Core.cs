@@ -28,6 +28,7 @@ public class MMVR_Core : MonoBehaviour {
 
 		sandboxManager.ToggleCamera (true);
 		currentMode = Mode.SandboxEditor;
+		Time.timeScale = 0f;
 		modeText.text = currentMode.ToString();
 	}
 	
@@ -51,6 +52,7 @@ public class MMVR_Core : MonoBehaviour {
 	//switch from whatever mode to "play" level
 	void PlaytestLevel()
 	{
+		Time.timeScale = 1f;
 		playerStart.SetActive (false);
 		currentMode = Mode.PlaytestMode;
 		sandboxManager.TogglePropertyPanel (false);
@@ -66,6 +68,8 @@ public class MMVR_Core : MonoBehaviour {
 
 	void StopPlaytest()
 	{
+
+		Time.timeScale = 0f;
 		playerStart.SetActive (true);
 		currentMode = Mode.SandboxEditor;
 		sandboxManager.TogglePropertyPanel (true);

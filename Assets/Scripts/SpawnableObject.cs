@@ -9,6 +9,7 @@ public class SpawnableObject {
 	public string objName;
 	public Vector3 pos;
 	public Vector3 rot;
+	public string dictKey;
 	public enum ObjectType
 	{
 		Terrain,
@@ -29,13 +30,16 @@ public class SpawnableObject {
 		this.objType = objType;
 		switch (objType) {
 		case ObjectType.Cube:
-			gameObj = GameObject.CreatePrimitive (PrimitiveType.Cube);
+			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("Cube"));
+			dictKey = "generic";
 			break;
 		case ObjectType.Character:
 			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("Shelly"));
+			dictKey = "generic";
 			break;
 		case ObjectType.Terrain:
 			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("TerrainPrefab"));
+			dictKey = "terrain";
 			break;
 		}
 

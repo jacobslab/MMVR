@@ -41,7 +41,7 @@ public class ObjectPanelManager : MonoBehaviour {
 		GameObject newText = Instantiate (textPrefab);
 		newText.GetComponent<Text> ().text = text;
 		newText.transform.parent = this.transform;
-		newText.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (30f,150f + (index * -40f), 0f);
+		newText.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (30f,150f + (index * -90f), 0f);
 		newText.GetComponent<SpawnSelect> ().associatedObj = obj.gameObj;
 		newText.GetComponent<SpawnSelect> ().assignedIndex = index;
 

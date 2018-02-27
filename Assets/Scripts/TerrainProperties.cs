@@ -6,13 +6,35 @@ using UnityEngine.UI;
 public class TerrainProperties : MonoBehaviour {
 	public GameObject terrainObj;
 	public Texture2D[] textureArr;
+	public enum TerrainMode
+	{
+		Paint,
+		Height,
+		Detail
+	}
+	public static TerrainMode terrainMode;
+
 	// Use this for initialization
 	void Start () {
 		textureArr = new Texture2D[transform.childCount];
-		for (int i = 0; i < textureArr.Length; i++) {
+		for (int i = 0; i < 4; i++) {
 			textureArr [i] = (Texture2D)transform.GetChild (i).GetComponent<RawImage> ().texture;
 		}
 		
+	}
+
+	public void ActivatePaintMode()
+	{
+		terrainMode = TerrainMode.Paint;
+	}
+
+	public void ActivateHeightMode()
+	{
+		terrainMode = TerrainMode.Height;
+	}
+	public void ActivateDetailMode()
+	{
+		terrainMode = TerrainMode.Detail;
 	}
 
 	public void ChangeTerrainSplatTexture(int textureIndex)

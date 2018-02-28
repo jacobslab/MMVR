@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq; // used for Sum of array
-
+using UnityEditor;
+using System.Collections.Generic;
+using System.IO;
 public class ModifyTerrain : MonoBehaviour {
 
 
@@ -19,6 +21,9 @@ public class ModifyTerrain : MonoBehaviour {
 	float[, ,] splatmapData;
 	float[,] heightmapData;
 	int[,] detailmapData;
+	public GameObject treePrefab;
+
+	int treeLayer= 1<<10;
 	void Start () {
 		// Get the attached terrain component
 		terrain = gameObject.GetComponent<Terrain> ();
@@ -49,17 +54,18 @@ public class ModifyTerrain : MonoBehaviour {
 						ChangeHeightmap (normPoints, TerrainModes.Subtractive);
 					else if(TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
 						ChangeDetailMap (normPoints,TerrainModes.Subtractive);
+					else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Tree)
+						PaintTrees (hit.point, TerrainModes.Subtractive);
 				} else {
 					if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Height)
 						ChangeHeightmap (normPoints, TerrainModes.Additive);
-					else if(TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
-						ChangeDetailMap (normPoints,TerrainModes.Additive);
+					else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
+						ChangeDetailMap (normPoints, TerrainModes.Additive);
+					else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Tree)
+						PaintTrees (hit.point, TerrainModes.Additive);
+					
 				}
 			}
-		}
-
-		if (Input.GetMouseButtonDown (1)) {
-			
 		}
 	}
 
@@ -69,6 +75,27 @@ public class ModifyTerrain : MonoBehaviour {
 		ResetDetailMap ();
 	}
 
+	//trees
+	void PaintTrees(Vector3 hitpoint,TerrainModes terrainMode)
+	{
+		if (terrainMode == TerrainModes.Additive) {
+			GameObject treeInst = Instantiate (treePrefab, hitpoint, Quaternion.identity) as GameObject;
+			treeInst.layer = 10;
+		} else {
+				RaycastHit hitTree;
+			if(Physics.SphereCast(hitpoint,10f,Vector3.forward,out hitTree,10f,treeLayer))
+			{
+				Debug.Log ("found");
+				if (hitTree.collider.gameObject != null) {
+					Destroy (hitTree.collider.gameObject);
+				}
+			}
+		}
+
+	}
+
+
+	//detail maps
 	void ResetDetailMap()
 	{
 		detailmapData = terrainData.GetDetailLayer (0, 0, terrainData.detailWidth, terrainData.detailHeight, 0);
@@ -98,6 +125,8 @@ public class ModifyTerrain : MonoBehaviour {
 		terrainData.SetDetailLayer (0, 0, 0, detailmapData);
 	}
 
+
+	//height maps
 	void ResetHeightmap()
 	{
 		heightmapData = terrainData.GetHeights(0, 0, terrainData.heightmapWidth, terrainData.heightmapHeight);
@@ -133,6 +162,7 @@ public class ModifyTerrain : MonoBehaviour {
 	    terrain.ApplyDelayedHeightmapModification ();
 	}
 
+	//splat maps
 	void ChangeSplatmap(Vector2 normPoints)
 	{
 		//normalize and multiply by alphamap to get the exact terrain coordinates that were clicked on
@@ -143,10 +173,16 @@ public class ModifyTerrain : MonoBehaviour {
 		for(int i=mapX-5;i<(mapX+5);i++)
 		{
 			for (int j = mapZ - 5; j < (mapZ + 5); j++) {
-				splatmapData [j,i, 0] = 1;
+				for (int k = 0; i < 4; k++) {
+					splatmapData [j, i, k] = 0f;
+					terrainData.SetAlphamaps(0, 0, splatmapData);
+				}
+				splatmapData [j,i, TerrainProperties.targetSplatTextureIndex] = 0.3f;
 			}
 		}
 		// Finally assign the new splatmap to the terrainData:
 		terrainData.SetAlphamaps(0, 0, splatmapData);
 	}
+
+
 }

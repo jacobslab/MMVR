@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d85591b76c54c43a3d313bda829fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treePrefab: {fileID: 100016, guid: 469edab27ab6d004d84af2c4a851bd7f, type: 3}
 --- !u!154 &154958394125255102
 TerrainCollider:
   m_ObjectHideFlags: 1

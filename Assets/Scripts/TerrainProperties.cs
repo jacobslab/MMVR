@@ -6,11 +6,14 @@ using UnityEngine.UI;
 public class TerrainProperties : MonoBehaviour {
 	public GameObject terrainObj;
 	public Texture2D[] textureArr;
+	public static int targetSplatTextureIndex=0;
+	private CanvasGroup textureGroup;
 	public enum TerrainMode
 	{
 		Paint,
 		Height,
-		Detail
+		Detail,
+		Tree
 	}
 	public static TerrainMode terrainMode;
 
@@ -18,7 +21,8 @@ public class TerrainProperties : MonoBehaviour {
 	void Start () {
 		textureArr = new Texture2D[transform.childCount];
 		for (int i = 0; i < 4; i++) {
-			textureArr [i] = (Texture2D)transform.GetChild (i).GetComponent<RawImage> ().texture;
+			textureGroup = transform.GetChild (0).gameObject.GetComponent<CanvasGroup> ();
+			textureArr [i] = (Texture2D)transform.GetChild(0).GetChild (i).GetComponent<RawImage> ().texture;
 		}
 		
 	}
@@ -26,15 +30,24 @@ public class TerrainProperties : MonoBehaviour {
 	public void ActivatePaintMode()
 	{
 		terrainMode = TerrainMode.Paint;
+		textureGroup.alpha = 1f;
 	}
 
 	public void ActivateHeightMode()
 	{
 		terrainMode = TerrainMode.Height;
+		textureGroup.alpha = 0f;
 	}
 	public void ActivateDetailMode()
 	{
 		terrainMode = TerrainMode.Detail;
+		textureGroup.alpha = 0f;
+	}
+
+	public void ActivateTreeMode()
+	{
+		terrainMode = TerrainMode.Tree;
+		textureGroup.alpha = 0f;
 	}
 
 	public void ChangeTerrainSplatTexture(int textureIndex)
@@ -42,7 +55,8 @@ public class TerrainProperties : MonoBehaviour {
 		Texture2D[] targetTexture = new Texture2D[1];
 		targetTexture [0] = textureArr [textureIndex];
 		Terrain terrain = terrainObj.GetComponent<Terrain> ();
-		SetTerrainSplatMap (terrain, targetTexture);
+//		SetTerrainSplatMap (terrain, targetTexture);
+		targetSplatTextureIndex = textureIndex;
 	}
 
 	void SetTerrainSplatMap(Terrain terrain, Texture2D[] textures)

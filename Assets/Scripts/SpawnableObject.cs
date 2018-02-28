@@ -13,6 +13,7 @@ public class SpawnableObject {
 	public enum ObjectType
 	{
 		Terrain,
+		PlayerStart,
 		Cube,
 		Character,
 		BoxObject,
@@ -40,6 +41,10 @@ public class SpawnableObject {
 		case ObjectType.Terrain:
 			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("TerrainPrefab"));
 			dictKey = "terrain";
+			break;
+		case ObjectType.PlayerStart:
+			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("PlayerStartCube"));
+			dictKey = "player_start";
 			break;
 		}
 

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UI;
 public class MMVR_Core : MonoBehaviour {
 
+	public PropertyPanelManager propertyPanelManager;
 	public SandboxEditorManager sandboxManager;
 	public GameObject fpsControllerPrefab;
 	private FirstPersonController fpsController;
@@ -62,6 +64,7 @@ public class MMVR_Core : MonoBehaviour {
 		//instantiate fpsController
 		GameObject tempFPSController = Instantiate(fpsControllerPrefab,playerStart.transform.position,playerStart.transform.rotation) as GameObject;
 		fpsController = tempFPSController.GetComponent<FirstPersonController> ();
+		propertyPanelManager.ApplyPlayerProperties (fpsController);
 		if(fpsController!=null)
 			fpsController.gameObject.SetActive(true);
 	}

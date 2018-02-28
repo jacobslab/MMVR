@@ -19,6 +19,8 @@ public class PlaceManager : MonoBehaviour {
 	public GameObject terrainPrefab;
 	public Terrain terrainData;
 	public Texture2D[] textureArr;
+
+	public Vector3 defaultPlayerStartPos;
 	//EXPERIMENT IS A SINGLETON
 	private static PlaceManager _instance;
 	public static PlaceManager Instance{
@@ -37,6 +39,7 @@ public class PlaceManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		EventManager.OnInitialSetupComplete+=CreateTerrain;
+		EventManager.OnInitialSetupComplete += CreatePlayerStart;
 	}
 	
 	// Update is called once per frame
@@ -58,6 +61,16 @@ public class PlaceManager : MonoBehaviour {
 	public void SetSkybox()
 	{
 		propertyManager.SwitchToPanel ("skybox");
+	}
+
+	public void CreatePlayerStart()
+	{
+		SpawnableObject newObj = new SpawnableObject ("player_start", defaultPlayerStartPos,Vector3.zero,SpawnableObject.ObjectType.PlayerStart);
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject ("player_start",newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.PlayerStart,newObj.gameObj);
+
 	}
 
 	public void CreateCube(Vector3 pos)

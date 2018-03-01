@@ -44,7 +44,7 @@ public class PropertyPanelManager : MonoBehaviour {
 		case SpawnableObject.ObjectType.PlayerStart:
 			GameObject playerPropertiesObj = CreatePropertyPanel (playerStartPropertiesPrefab,associatedObj.name);
 			break;
-		case SpawnableObject.ObjectType.Cube:
+		default:
 			GameObject cubePropertiesObj = CreatePropertyPanel (genericPropertiesPrefab, associatedObj.name);
 			cubePropertiesObj.GetComponent<GenericProperties> ().associatedObj = associatedObj;
 			break;
@@ -54,7 +54,7 @@ public class PropertyPanelManager : MonoBehaviour {
 	GameObject CreatePropertyPanel(GameObject propertiesPrefab,string keyToAdd)
 	{
 		GameObject propertiesObj = Instantiate (propertiesPrefab, spawnPos, Quaternion.identity) as GameObject;
-		propertiesObj.transform.parent = transform.GetChild (0).transform;
+		propertiesObj.transform.parent = transform.transform;
 		propertiesObj.transform.localPosition =spawnPos;
 		propertyPanelDict.Add (keyToAdd, propertiesObj);
 		propertiesObj.SetActive (false);
@@ -65,9 +65,9 @@ public class PropertyPanelManager : MonoBehaviour {
 	{
 		GameObject resultObj;
 		propertyPanelDict.TryGetValue ("player_start", out resultObj);
-		Debug.Log ("result obj is: " + resultObj.name);
+		fpsController.canControl = resultObj.GetComponent<PlayerStartProperties> ().playerControlToggle.isOn;
 		fpsController.gameObject.GetComponent<CharacterController> ().enabled = resultObj.GetComponent<PlayerStartProperties> ().playerControlToggle.isOn;
-		Debug.Log ("turned charcontroller to " + resultObj.GetComponent<PlayerStartProperties> ().playerControlToggle.isOn.ToString ());
+		fpsController.EnableHandlebars (resultObj.GetComponent<PlayerStartProperties> ().hasHandlebarsToggle.isOn);
 			
 	}
 

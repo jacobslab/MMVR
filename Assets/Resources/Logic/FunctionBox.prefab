@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114516129303154354}
   m_Layer: 5
   m_Name: OutButton
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 114707273045200958}
   m_Layer: 5
   m_Name: InButton
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -378,6 +378,8 @@ MonoBehaviour:
   canvasTransform: {fileID: 0}
   utilitiesConnected: []
   utilityDropdownPrefab: {fileID: 0}
+  bezierPrefab: {fileID: 1020411112782118, guid: 15db9d97a04fa4f138865549bcac372b,
+    type: 2}
   inPin: {fileID: 114707273045200958}
   outPin: {fileID: 114516129303154354}
 --- !u!114 &114765150754300310
@@ -541,7 +543,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1061958705135846}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

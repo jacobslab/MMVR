@@ -14,10 +14,14 @@ public class FunctionBox : InteractableUIElement {
 
 	public List<UtilityBox> utilitiesConnected;
 	public GameObject utilityDropdownPrefab;
+	public GameObject bezierPrefab;
+	GameObject activeBezierCurve;
 
 	//PIN BUTTONS
 	public Button inPin;
 	public Button outPin;
+
+	List<GameObject> outBezierList;
 
 	Vector3 lastClickedPos;
 	Vector3 startPos;
@@ -26,6 +30,7 @@ public class FunctionBox : InteractableUIElement {
 	// Use this for initialization
 	void Start () {
 		canvasTransform = GameObject.FindGameObjectWithTag("Canvas").transform;
+		outBezierList = new List<GameObject> ();
 		activeSequence = new List<IEnumerator> ();
 		utilitiesConnected = new List<UtilityBox> ();
 		Debug.Log (transform.position.ToString ());
@@ -33,6 +38,8 @@ public class FunctionBox : InteractableUIElement {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log (this.GetComponent<RectTransform> ().anchoredPosition3D);
+		Debug.Log (Camera.main.ViewportToWorldPoint (this.GetComponent<RectTransform>().anchoredPosition3D));
 	}
 
 	public void SetupFunctionBox(string name)
@@ -80,6 +87,7 @@ public class FunctionBox : InteractableUIElement {
 	public void OutButtonPressed()
 	{
 		outConnecting = true;
+		Debug.Log ("set outconnecting to true");
 		startPos=Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords ());
 	}
 
@@ -118,8 +126,7 @@ public class FunctionBox : InteractableUIElement {
 		}
 	
 	}
-
-
+		
 
 	public override void OnPointerEnter(PointerEventData eventData)
 	{
@@ -129,13 +136,35 @@ public class FunctionBox : InteractableUIElement {
 	{
 		//Debug.Log("They started dragging " + this.name);
 		lastClickedPos =  Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
+		if (data.pointerPress.tag == "Button") {
+			activeBezierCurve = Instantiate (bezierPrefab, lastClickedPos, Quaternion.identity) as GameObject;
+			activeBezierCurve.GetComponent<Bezier_Curve> ().p0 = lastClickedPos;
+		} 
 	}
+
 	public override void OnEndDrag(PointerEventData data)
 	{
 		//Debug.Log("Stopped dragging " + this.name);
 		bool result=CheckForUtilityConnection (data.pointerEnter);
-		if (outConnecting)
-			outConnecting = false;
+		if (result) {
+			activeBezierCurve.GetComponent<Bezier_Curve> ().enabled = false;
+//			activeBezierCurve.GetComponent<Bezier_Curve> ().isSet=true;
+//			Debug.Log("my outpin: "+ outPin.gameObject.name);
+//			activeBezierCurve.GetComponent<Bezier_Curve>().start=this.gameObject;
+//			Debug.Log ("their outpin: " + utilitiesConnected [utilitiesConnected.Count - 1].gameObject.name);
+//			activeBezierCurve.GetComponent<Bezier_Curve> ().end = utilitiesConnected [utilitiesConnected.Count - 1].gameObject;
+			outBezierList.Add (activeBezierCurve);
+			activeBezierCurve = null;
+			Debug.Log ("bezier obj: " + outBezierList [outBezierList.Count - 1].gameObject.name);
+			result = false;
+		} else {
+			Debug.Log ("FALSE");
+			Destroy (activeBezierCurve);
+			activeBezierCurve = null;
+		}
+
+		Debug.Log ("out connecting is false");
+		outConnecting = false;
 	}
 	public override void OnDrag(PointerEventData data)
 	{
@@ -143,6 +172,11 @@ public class FunctionBox : InteractableUIElement {
 			GetComponent<RectTransform> ().anchoredPosition3D = Camera.main.ScreenToViewportPoint (GetMousePosInWorldCoords ());
 			GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (GetComponent<RectTransform> ().anchoredPosition3D.x * Screen.width, GetComponent<RectTransform> ().anchoredPosition3D.y * Screen.height);
 			lastDraggedPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords ());
+			if (activeBezierCurve != null) {
+				activeBezierCurve.GetComponent<Bezier_Curve> ().p2 = lastDraggedPos;
+			}
+
 		}
+
 	}
 }

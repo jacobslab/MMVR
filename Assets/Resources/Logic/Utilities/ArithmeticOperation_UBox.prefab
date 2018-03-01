@@ -520,11 +520,16 @@ MonoBehaviour:
   utilityNameText: {fileID: 114721164141123094}
   canvasTransform: {fileID: 0}
   displayName: Arithmetic Operation
+  bezierPrefab: {fileID: 1020411112782118, guid: 15db9d97a04fa4f138865549bcac372b,
+    type: 2}
+  activeBezierCurve: {fileID: 0}
   functionConnectedTo: {fileID: 0}
   arguments: []
   argTransforms: []
   inPin: {fileID: 1411778869445070}
   outPin: {fileID: 1338716531482910}
+  currentlyDraggedPin: {fileID: 0}
+  lastClickedPos: {x: 0, y: 0, z: 0}
   leftOperand: {fileID: 114949526282685614}
   rightOperand: {fileID: 114441810702934054}
   operationSign: {fileID: 114480067379597876}

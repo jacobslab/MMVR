@@ -21,15 +21,15 @@ public class ObjectManipulator : MonoBehaviour {
 
 	void OnMouseDown()
 	{
-			originalColor = gameObject.GetComponent<Renderer> ().material.color;
-			gameObject.GetComponent<Renderer> ().material.color = Color.yellow;
+		//	originalColor = gameObject.GetComponent<Renderer> ().material.color;
+		//	gameObject.GetComponent<Renderer> ().material.color = Color.yellow;
 			gameObject.GetComponent<BoxCollider> ().enabled = false;
 			editorController.SetSelectedObject(this.gameObject);
 			mouseDown = true;
 	}
 	void OnMouseUp()
 	{
-		gameObject.GetComponent<Renderer> ().material.color = originalColor;
+	//	gameObject.GetComponent<Renderer> ().material.color = originalColor;
 		mouseDown = false;
 		gameObject.GetComponent<BoxCollider> ().enabled = true;
 	}

@@ -8,6 +8,9 @@ public class UtilityBox : InteractableUIElement {
 	public Text utilityNameText;
 	public Transform canvasTransform;
 	public string displayName;
+	public GameObject bezierPrefab;
+
+	public GameObject activeBezierCurve;
 
 	public GameObject functionConnectedTo;
 	public List<GameObject> arguments;
@@ -74,12 +77,12 @@ public class UtilityBox : InteractableUIElement {
 		Debug.Log ("TRUE");
 	}
 
-	public virtual void CheckForUtilityConnection(GameObject droppedObj)
+	public virtual bool CheckForUtilityConnection(GameObject droppedObj)
 	{
 		GameObject droppedPin;
 		if (droppedObj != null) {
 			Debug.Log ("dropped object is : " + droppedObj.name);
-			if (droppedObj.name.Contains("InPin")) {
+			if (droppedObj.name.Contains ("InPin")) {
 				droppedPin = droppedObj;
 				droppedObj = droppedObj.transform.parent.gameObject;
 				Debug.Log ("connected with utilitybox");
@@ -89,17 +92,21 @@ public class UtilityBox : InteractableUIElement {
 
 				//only add if it hasn't already been added before to this function
 				bool foundMatch = false;
-				for (int i = 0; i < functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected.Count; i++) {
-					if (functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected [i] == droppedObj.GetComponent<UtilityBox> ())
+				for (int i = 0; i < functionConnectedTo.GetComponent<FunctionBox> ().utilitiesConnected.Count; i++) {
+					if (functionConnectedTo.GetComponent<FunctionBox> ().utilitiesConnected [i] == droppedObj.GetComponent<UtilityBox> ())
 						foundMatch = true;
 				}
 				if (!foundMatch) {
-					functionConnectedTo.GetComponent<FunctionBox>().utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox> ());
+					functionConnectedTo.GetComponent<FunctionBox> ().utilitiesConnected.Add (droppedObj.GetComponent<UtilityBox> ());
 					droppedPin.GetComponent<Image> ().color = Color.gray;
 					outPin.GetComponent<Image> ().color = Color.gray;
-				}
-			}
-		}
+					return true;
+				} else
+					return false;
+			} else
+				return false;
+		} else
+			return false;
 
 	}
 	public virtual IEnumerator ExecuteCoroutine()
@@ -121,11 +128,23 @@ public class UtilityBox : InteractableUIElement {
 	public override void OnBeginDrag(PointerEventData data)
 	{
 //		Debug.Log("They started dragging " + this.name);
+		Vector3 lastClickedPos= Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
+		activeBezierCurve = Instantiate (bezierPrefab, lastClickedPos, Quaternion.identity) as GameObject;
+		activeBezierCurve.GetComponent<Bezier_Curve> ().p0 = lastClickedPos;
 	}
 	public override void OnEndDrag(PointerEventData data)
 	{
 		//Debug.Log("Stopped dragging " + this.name);
-		CheckForUtilityConnection (data.pointerEnter);
+		bool result = CheckForUtilityConnection (data.pointerEnter);
+		if (result) {
+			activeBezierCurve.GetComponent<Bezier_Curve> ().enabled = false;
+			activeBezierCurve = null;
+			result = false;
+		} else {
+			Destroy (activeBezierCurve);
+			activeBezierCurve = null;
+		}
+
 	}
 	public override void OnDrag(PointerEventData data)
 	{		

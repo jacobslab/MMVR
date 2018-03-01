@@ -14,6 +14,7 @@ public class PlaceManager : MonoBehaviour {
 	public HierarchyManager hierarchyManager;
 	public PropertyPanelManager propertyManager;
 
+	private int buildingIndex=0;
 	private int cubeIndex=0;
 	private int charIndex=0;
 	public GameObject terrainPrefab;
@@ -85,6 +86,17 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Cube,newObj.gameObj);
 		cubeIndex++;
+	}
+
+	public void CreateBuilding(Vector3 pos)
+	{
+		string name = "building_" + buildingIndex.ToString ();
+		SpawnableObject newObj = new SpawnableObject (name, pos,Vector3.zero,SpawnableObject.ObjectType.Building);
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject (name,newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Building,newObj.gameObj);
+		buildingIndex++;
 	}
 
 	public void CreateCube(string name, Vector3 pos, Vector3 rot)

@@ -441,12 +441,17 @@ MonoBehaviour:
   utilityNameText: {fileID: 114677481773543856}
   canvasTransform: {fileID: 0}
   displayName: Print String
+  bezierPrefab: {fileID: 1020411112782118, guid: 15db9d97a04fa4f138865549bcac372b,
+    type: 2}
+  activeBezierCurve: {fileID: 0}
   functionConnectedTo: {fileID: 0}
   arguments:
   - {fileID: 1796801329179342}
   argTransforms: []
   inPin: {fileID: 1118170275615702}
   outPin: {fileID: 1466969407189370}
+  currentlyDraggedPin: {fileID: 0}
+  lastClickedPos: {x: 0, y: 0, z: 0}
   textInput: {fileID: 114292103149940136}
 --- !u!114 &114677481773543856
 MonoBehaviour:

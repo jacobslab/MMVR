@@ -21,7 +21,7 @@ public class Branch_UBox : UtilityBox{
 		functionConnectedTo.GetComponent<FunctionBox> ().AddToSequence (Branch(conditionPin.isOn));
 	}
 
-	public override void CheckForUtilityConnection(GameObject droppedObj)
+	public override bool CheckForUtilityConnection(GameObject droppedObj)
 	{
 		GameObject droppedPin;
 		if (droppedObj != null) {
@@ -39,16 +39,20 @@ public class Branch_UBox : UtilityBox{
 						foundMatch = true;
 				}
 				if (!foundMatch) {
-					if(currentlyDraggedPin.name=="TruePin")
-						trueConnectedToUtility=droppedObj.GetComponent<UtilityBox> ();
+					if (currentlyDraggedPin.name == "TruePin")
+						trueConnectedToUtility = droppedObj.GetComponent<UtilityBox> ();
 					else
-						falseConnectedToUtility=droppedObj.GetComponent<UtilityBox> ();
+						falseConnectedToUtility = droppedObj.GetComponent<UtilityBox> ();
 					
 					droppedPin.GetComponent<Image> ().color = Color.gray;
 					currentlyDraggedPin.GetComponent<Image> ().color = Color.gray;
-				}
+					return true;
+				} else
+					return false;
 			}
+			return false;
 		}
+		return false;
 
 	}
 	public override void OnBeginDrag(PointerEventData data)
@@ -58,6 +62,8 @@ public class Branch_UBox : UtilityBox{
 			lastClickedPos = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords());
 		}
 		Debug.Log("Dragged pin " + data.pointerPress.name);
+		activeBezierCurve = Instantiate (bezierPrefab, lastClickedPos, Quaternion.identity) as GameObject;
+		activeBezierCurve.GetComponent<Bezier_Curve> ().p0 = lastClickedPos;
 	}
 
 	IEnumerator Branch(bool condition)

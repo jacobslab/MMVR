@@ -577,13 +577,17 @@ MonoBehaviour:
   selected: 0
   utilityNameText: {fileID: 114580647142953300}
   canvasTransform: {fileID: 0}
-  displayName: 
+  displayName: Branch
+  bezierPrefab: {fileID: 1020411112782118, guid: 15db9d97a04fa4f138865549bcac372b,
+    type: 2}
+  activeBezierCurve: {fileID: 0}
   functionConnectedTo: {fileID: 0}
   arguments: []
   argTransforms: []
   inPin: {fileID: 1675493659255050}
   outPin: {fileID: 0}
   currentlyDraggedPin: {fileID: 0}
+  lastClickedPos: {x: 0, y: 0, z: 0}
   truePin: {fileID: 1120506900895094}
   falsePin: {fileID: 1730315861263402}
   conditionPin: {fileID: 114425483360348550}

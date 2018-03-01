@@ -65,10 +65,16 @@ public class PlacePanel : InteractableUIElement {
 	void DropSpawnObject()
 	{
 		switch (objectType) {
+		case SpawnableObject.ObjectType.Building:
+			Debug.Log ("drop spawned building");
+			PlaceManager.Instance.CreateBuilding (lastDraggedPos);
+			break;
 		case SpawnableObject.ObjectType.Cube:
+			Debug.Log ("drop spawned cube");
 			PlaceManager.Instance.CreateCube (lastDraggedPos);
 			break;
 		case SpawnableObject.ObjectType.Character:
+			Debug.Log ("drop spawned character");
 			PlaceManager.Instance.CreateCharacter (lastDraggedPos);
 			break;
 		

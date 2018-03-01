@@ -3,7 +3,7 @@
 [RequireComponent(typeof(LineRenderer))]
 public class Bezier_Curve : MonoBehaviour
 {
-	public GameObject start, middle, end;
+	public Vector3 p0,p1,p2;
 	public Color color = Color.white;
 	public float width = 0.2f;
 	public int numberOfPoints = 20;
@@ -11,6 +11,9 @@ public class Bezier_Curve : MonoBehaviour
 	public bool useWorldSpace=true;
 	public RectTransform outPin;
 	Vector3 lastClickedPos;
+	public bool isSet=false;
+
+	public GameObject start,end;
 	void Start () 
 	{
 		lineRenderer = GetComponent<LineRenderer>();
@@ -18,35 +21,48 @@ public class Bezier_Curve : MonoBehaviour
 //		lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
 	}
 
-	void Update () 
+	void FixedUpdate () 
 	{
-		if (Input.GetMouseButtonDown (0)) {
-			lastClickedPos = GetMousePosInWorldCoords();
-		}
-		if( lineRenderer == null)
-		{
-			return; // no points specified
-		}
+		if (!isSet) {
+			if (Input.GetMouseButtonDown (0)) {
+				lastClickedPos = GetMousePosInWorldCoords ();
+			}
+			if (lineRenderer == null) {
+				return; // no points specified
+			}
 
-		// update line renderer
-		lineRenderer.startColor = color;
-		lineRenderer.endColor = color;
-		lineRenderer.startWidth = width;
-		lineRenderer.endWidth = width;
+			// update line renderer
+			lineRenderer.startColor = color;
+			lineRenderer.endColor = color;
+			lineRenderer.startWidth = width;
+			lineRenderer.endWidth = width;
 
-		if (numberOfPoints > 0)
-		{
-			lineRenderer.positionCount = numberOfPoints;
-		}
+			if (numberOfPoints > 0) {
+				lineRenderer.positionCount = numberOfPoints;
+			}
 
-		// set points of quadratic Bezier curve
+			// set points of quadratic Bezier curve
 //		Vector3 p0 =start.transform.position;
-		Vector3 p0 =  Camera.main.ScreenToWorldPoint(lastClickedPos);
+//		p0 =  Camera.main.ScreenToWorldPoint(lastClickedPos);
 //		Vector3 p1 = middle.transform.position;
 
 //		Vector3 p2 = end.transform.position;
-		Vector3 p2 = Camera.main.ScreenToWorldPoint(GetMousePosInWorldCoords());
-		Vector3 p1 = (p0 + p2) * 0.25f;
+			p2 = Camera.main.ScreenToWorldPoint (GetMousePosInWorldCoords ());
+			UpdateCurve (p0, p2);
+		} else {
+//			Debug.Log ("post-update");
+			UpdateCurve (Camera.main.ScreenToWorldPoint (start.transform.position), Camera.main.ScreenToWorldPoint (end.transform.position));
+		}
+	}
+
+	public void UpdateCurve(Vector3 p0,Vector3 p2)
+	{
+		//if their values are zero, then they were set by "one-end" of the curve which means we should retain their old positions
+		if (p0 == Vector3.zero)
+			p0 = p0;
+		else if (p2 == Vector3.zero)
+			p2 = p2;
+		p1 = (p0 + p2) * 0.5f;
 		float t;
 		Vector3 position;
 		for(int i = 0; i < numberOfPoints; i++)

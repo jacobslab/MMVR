@@ -14,6 +14,7 @@ public class SpawnableObject {
 	{
 		Terrain,
 		PlayerStart,
+		Building,
 		Cube,
 		Character,
 		BoxObject,
@@ -45,6 +46,10 @@ public class SpawnableObject {
 		case ObjectType.PlayerStart:
 			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("PlayerStartCube"));
 			dictKey = "player_start";
+			break;
+		case ObjectType.Building:
+			gameObj = GameObject.Instantiate (Resources.Load<GameObject> ("Building01"));
+			dictKey = "building";
 			break;
 		}
 

@@ -42,6 +42,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+
+		//public variables
+		public bool canControl=true;
+		public GameObject handlebars;
+
         // Use this for initialization
         private void Start()
         {
@@ -61,7 +66,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            RotateView();
+			if (canControl) {
+				RotateView ();
+			}
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
@@ -139,6 +146,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource.clip = m_JumpSound;
             m_AudioSource.Play();
         }
+
+		public void EnableHandlebars(bool shouldEnable)
+		{
+			handlebars.SetActive (shouldEnable);
+		}
 
 
         private void ProgressStepCycle(float speed)

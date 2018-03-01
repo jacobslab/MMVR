@@ -39,7 +39,12 @@ public class VariablePanel : InteractableUIElement {
 
 	// Update is called once per frame
 	void Update () {
+		
 
+	}
+
+	public override void OnPointerDown( PointerEventData eventData )
+	{
 	}
 
 	public void ChangeVariableType()

@@ -37,9 +37,17 @@ public class LogicNodeManager : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.R))
 			CreateSequenceOfFunctionBox ();
-
+		if (Input.GetKeyDown (KeyCode.A))
+			RetrieveVariables ();
 	}
 
+	void RetrieveVariables()
+	{
+		for(int i=0;i<variableList.Count;i++)
+		{
+			Debug.Log ("variable type:" + variableList [i].GetComponent<VariablePanel> ().varType.ToString ());
+		}
+	}
 //	void OnGUI()
 //	{
 //		Event currentEvent = Event.current;

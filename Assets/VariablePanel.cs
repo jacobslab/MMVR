@@ -14,6 +14,8 @@ public class VariablePanel : InteractableUIElement {
 		Vector3,
 		Bool
 	}
+
+	private Image currentImage;
 	public VariableType varType;
 	public Transform canvasTransform;
 	public Transform originalParent;
@@ -31,6 +33,7 @@ public class VariablePanel : InteractableUIElement {
 	public Text objName;
 	// Use this for initialization
 	void Start () {
+		currentImage = GetComponent<Image> ();
 		canvasTransform = GetComponentInParent<Canvas> ().transform;
 		originalParent = transform.parent;
 		originalAnchoredPos3D = GetComponent<RectTransform> ().anchoredPosition3D;
@@ -45,6 +48,16 @@ public class VariablePanel : InteractableUIElement {
 
 	public override void OnPointerDown( PointerEventData eventData )
 	{
+		selected = true;
+		currentImage.color = Color.black;
+		LogicNodeManager.Instance.SetSelectedVariable (this.gameObject, spawnedVarBoxes[0]);
+	}
+
+
+	public void Deselect()
+	{
+		selected = false;
+		currentImage.color = Color.gray;
 	}
 
 	public void ChangeVariableType()
@@ -136,6 +149,8 @@ public class VariablePanel : InteractableUIElement {
 
 		}
 		if (varBox != null) {
+			if (!selected)
+				varBox.SetActive (false);
 			varBox.transform.parent = varPlaygroundRef.transform;
 			varBox.GetComponent<RectTransform> ().anchoredPosition3D = fixedBoxPos;
 			spawnedVarBoxes.Add (varBox);

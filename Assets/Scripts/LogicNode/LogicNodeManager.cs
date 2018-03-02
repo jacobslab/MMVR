@@ -17,6 +17,10 @@ public class LogicNodeManager : MonoBehaviour {
 	public GameObject variableContent;
 	public List<GameObject> variableList;
 
+
+	private GameObject activePlaygroundObj;
+	private GameObject selectedVariable;
+
 	public GameObject varPlayground;
 	int variableIndex=0;
 
@@ -26,6 +30,39 @@ public class LogicNodeManager : MonoBehaviour {
 
 	private int index;
 	float canvasScale=1f;
+
+
+	private static LogicNodeManager _instance;
+	public static LogicNodeManager Instance{
+		get{
+			return _instance;
+		}
+	}
+
+
+	public void SetSelectedVariable(GameObject varObj,GameObject playgroundObj)
+	{
+		if (activePlaygroundObj != null) {
+			Debug.Log ("deselecting " + activePlaygroundObj.name);
+			activePlaygroundObj.SetActive (false);
+		}
+
+		if (selectedVariable != null) {
+			selectedVariable.GetComponent<VariablePanel> ().Deselect ();
+		}
+		activePlaygroundObj = playgroundObj;
+		Debug.Log ("enabling : " + activePlaygroundObj.name);
+		activePlaygroundObj.SetActive (true);
+		selectedVariable = varObj;
+	}
+
+	void Awake(){
+		if (_instance != null) {
+			Debug.Log ("Instance already exists!");
+			return;
+		}
+		_instance = this;
+	}
 	// Use this for initialization
 	void Start () {
 		functionBoxList = new List<GameObject> ();

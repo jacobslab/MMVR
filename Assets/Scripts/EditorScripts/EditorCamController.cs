@@ -9,10 +9,15 @@ public class EditorCamController : MonoBehaviour {
 	public PlaceManager placeManager;
 	public ObjectPanelManager panelManager;
 	public HierarchyManager hierarchyManager;
-
+	public float moveFactor=5f;
+	public float rotFactorH=2f;
+	public float rotFactorV=2f;
+	private float yaw,pitch=0f;
 	private string json;
 	private EventManager eventManager;
 	public List<string> spawnToJson;
+
+	float mouseXDelta,mouseYDelta=0f;
 	//EXPERIMENT IS A SINGLETON
 	private static EditorCamController _instance;
 	public static EditorCamController Instance{
@@ -44,6 +49,49 @@ public class EditorCamController : MonoBehaviour {
 				StartCoroutine("DestroyObject");
 			}
 		}
+		if (Input.GetMouseButton(1)) {
+
+			yaw += rotFactorH * Input.GetAxis ("Mouse X");
+			pitch -= rotFactorV * Input.GetAxis ("Mouse Y");
+
+			RotateCamera ();
+
+			if (Input.GetKey (KeyCode.W))
+				MoveCamera (0,1);
+			else if (Input.GetKey (KeyCode.A))
+				MoveCamera (-1,0);
+			else if (Input.GetKey (KeyCode.S))
+				MoveCamera (0,-1);
+			else if (Input.GetKey (KeyCode.D))
+				MoveCamera (1,0);
+		}
+	}
+
+	void MoveCamera(int hAxis, int vAxis)
+	{
+		if (hAxis==1) {
+			transform.position += transform.right * moveFactor;
+		} 
+		else if (hAxis==-1) {
+			transform.position += transform.right * -moveFactor;
+		} 
+		else if (vAxis==1) {
+			transform.position += transform.forward * moveFactor;
+		}else if (vAxis == -1) {
+			transform.position += transform.forward * -moveFactor;
+		}
+
+	}
+
+	void RotateCamera()
+	{
+//		if (mouseXDel > 0f)
+//			transform.eulerAngles += Vector3.forward * rotFactor;
+//		else if (mouseXDel < 0f)
+//			transform.eulerAngles += Vector3.forward * -rotFactor;
+
+		transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+		
 	}
 
 	public void SetSelectedObject(GameObject objSelected)
@@ -53,8 +101,8 @@ public class EditorCamController : MonoBehaviour {
 		cleanedName = Regex.Replace (cleanedName, "[_]", string.Empty);
 
 		placeManager.propertyManager.SwitchToPanel (objSelected.name);
-		if (selectedObj != null)
-			mouseOrbit.target = selectedObj.transform;
+//		if (selectedObj != null)
+//			mouseOrbit.target = selectedObj.transform;
 	}
 		
 

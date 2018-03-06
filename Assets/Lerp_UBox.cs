@@ -10,13 +10,22 @@ public class Lerp_UBox : UtilityBox {
 	public Dropdown startPosArg;
 	public Dropdown endPosArg;
 	public Dropdown interpolantArg;
-	// Use this for initialization
-	void Start () {
-		
+
+	public override void AddCoroutineTo(GameObject functionAskingToBeConnected)
+	{
+		//Debug.Log ("added to the function");
+		functionConnectedTo.GetComponent<FunctionBox> ().AddToSequence (LerpVec3());
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+
+	public override IEnumerator ExecuteCoroutine()
+	{
+		yield return StartCoroutine (LerpVec3 ());
+		yield return null;
+	}
+
+	IEnumerator LerpVec3()
+	{
+		yield return null;
 	}
 }

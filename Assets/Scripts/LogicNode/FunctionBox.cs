@@ -38,8 +38,8 @@ public class FunctionBox : InteractableUIElement {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (this.GetComponent<RectTransform> ().anchoredPosition3D);
-		Debug.Log (Camera.main.ViewportToWorldPoint (this.GetComponent<RectTransform>().anchoredPosition3D));
+//		Debug.Log (this.GetComponent<RectTransform> ().anchoredPosition3D);
+//		Debug.Log (Camera.main.ViewportToWorldPoint (this.GetComponent<RectTransform>().anchoredPosition3D));
 	}
 
 	public void SetupFunctionBox(string name)

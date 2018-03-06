@@ -31,6 +31,9 @@ public class VariablePanel : InteractableUIElement {
 	GameObject varBox;
 	public Dropdown varTypeDropdown;
 	public Text objName;
+
+	public Text variableName;
+	public InputField variableInputField;
 	// Use this for initialization
 	void Start () {
 		currentImage = GetComponent<Image> ();
@@ -51,6 +54,9 @@ public class VariablePanel : InteractableUIElement {
 		selected = true;
 		currentImage.color = Color.black;
 		LogicNodeManager.Instance.SetSelectedVariable (this.gameObject, spawnedVarBoxes[0]);
+		if (eventData.lastPress.name == "VariableName") {
+			SwitchToInputField ();
+		}
 	}
 
 
@@ -81,9 +87,27 @@ public class VariablePanel : InteractableUIElement {
 
 	}
 
+	public void ChangeVariableName()
+	{
+		variableName.text = variableInputField.text;
+		SwitchToVariableText ();
+	}
+
+	void SwitchToVariableText()
+	{
+		variableInputField.gameObject.SetActive (false);
+		variableName.transform.parent.gameObject.SetActive (true);
+	}
+	public void SwitchToInputField()
+	{
+		variableInputField.gameObject.SetActive (true);
+		variableName.transform.parent.gameObject.SetActive (false);
+	}
+
 	//use this to setup the place panel
 	public void SetupPanel()
 	{
+		SwitchToVariableText ();
 		DropSpawnObject ();
 //		objName.text = name;
 		//		previewImage.texture = AssetPreview.GetAssetPreview (gameObj);

@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 222099160266815772}
   - component: {fileID: 114855216745110712}
   - component: {fileID: 114836229190912192}
+  - component: {fileID: 114563020340844780}
   m_Layer: 5
   m_Name: EndPos
   m_TagString: Untagged
@@ -616,6 +617,7 @@ GameObject:
   - component: {fileID: 222458845633452228}
   - component: {fileID: 114881347308152588}
   - component: {fileID: 114915181105345108}
+  - component: {fileID: 114817596801858252}
   m_Layer: 5
   m_Name: Interpolant
   m_TagString: Untagged
@@ -684,6 +686,7 @@ GameObject:
   - component: {fileID: 224125734766279428}
   - component: {fileID: 222151147634581894}
   - component: {fileID: 114981226558108896}
+  - component: {fileID: 114796726545419466}
   - component: {fileID: 114959557290326870}
   m_Layer: 5
   m_Name: StartPos
@@ -1693,6 +1696,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114563020340844780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1433431932803072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330a37de2144d405483f6df83579fd5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  varType: 2
+  selectedVarList: []
 --- !u!114 &114585419359633068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1761,7 +1777,7 @@ MonoBehaviour:
   selected: 0
   utilityNameText: {fileID: 114332368358714432}
   canvasTransform: {fileID: 0}
-  displayName: 
+  displayName: Linear Interpolate
   bezierPrefab: {fileID: 1020411112782118, guid: 15db9d97a04fa4f138865549bcac372b,
     type: 2}
   activeBezierCurve: {fileID: 0}
@@ -1914,6 +1930,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114796726545419466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1900693134317528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330a37de2144d405483f6df83579fd5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  varType: 2
+  selectedVarList: []
 --- !u!114 &114800389232892922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1987,6 +2016,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114817596801858252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1789146018022440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330a37de2144d405483f6df83579fd5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  varType: 1
+  selectedVarList: []
 --- !u!114 &114833647106620436
 MonoBehaviour:
   m_ObjectHideFlags: 1

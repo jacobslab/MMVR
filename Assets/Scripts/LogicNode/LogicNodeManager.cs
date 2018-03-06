@@ -132,6 +132,7 @@ public class LogicNodeManager : MonoBehaviour {
 		variableGroupObj.transform.parent = variableContent.transform;
 		variableGroupObj.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (91.62f, 240f + (variableIndex * -90f), 0f);
 		variableGroupObj.GetComponent<VariablePanel> ().varPlaygroundRef = varPlayground;
+		variableGroupObj.GetComponent<VariablePanel> ().variableName.text = "Variable_"+variableIndex.ToString();
 		variableList.Add (variableGroupObj);
 		variableIndex++;
 	}

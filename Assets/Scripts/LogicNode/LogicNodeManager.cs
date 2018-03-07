@@ -7,6 +7,9 @@ public class LogicNodeManager : MonoBehaviour {
 
 	public GameObject functionBoxPrefab;
 	public GameObject utilityBoxPrefab;
+	public GameObject beginBoxPrefab;
+	public GameObject tickBoxPrefab;
+
 	public Transform logicParent;
 	public List<GameObject> functionBoxList;
 
@@ -27,6 +30,11 @@ public class LogicNodeManager : MonoBehaviour {
 	public List<FunctionBox> funcSequence;
 
 	public GameObject variableGroupPrefab;
+
+	public Vector3 beginBoxSpawnPos;
+	public Vector3 tickBoxSpawnPos;
+	private GameObject beginBox;
+	private GameObject tickBox;
 
 	private int index;
 	float canvasScale=1f;
@@ -68,6 +76,7 @@ public class LogicNodeManager : MonoBehaviour {
 		functionBoxList = new List<GameObject> ();
 		utilityList = Resources.LoadAll<GameObject>("Logic/Utilities");
 		variableList = new List<GameObject> ();
+		SpawnBasicBoxes ();
 	}
 	
 	// Update is called once per frame
@@ -76,6 +85,23 @@ public class LogicNodeManager : MonoBehaviour {
 			CreateSequenceOfFunctionBox ();
 		if (Input.GetKeyDown (KeyCode.A))
 			RetrieveVariables ();
+	}
+
+	void SpawnBasicBoxes()
+	{
+		Vector3 beginPos = Camera.main.ScreenToWorldPoint (beginBoxSpawnPos);
+		Debug.Log ("beginpos: " + beginPos.ToString ());
+		beginBox = Instantiate(beginBoxPrefab,beginPos,Quaternion.identity) as GameObject;
+		beginBox.transform.SetParent(logicParent,false);
+		beginBox.transform.localPosition = beginPos;
+		functionBoxList.Add (beginBox);
+
+		Vector3 tickPos = Camera.main.ScreenToWorldPoint (tickBoxSpawnPos);
+		Debug.Log ("tickpos: " + tickPos.ToString ());
+		tickBox = Instantiate(tickBoxPrefab,tickPos,Quaternion.identity) as GameObject;
+		tickBox.transform.SetParent(logicParent,false);
+		tickBox.transform.localPosition = tickPos;
+		functionBoxList.Add (tickBox);
 	}
 
 	void RetrieveVariables()

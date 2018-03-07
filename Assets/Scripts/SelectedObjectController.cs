@@ -31,4 +31,11 @@ public class SelectedObjectController : MonoBehaviour {
 			selectedObj.transform.Rotate(0, 90, 0);
 		}
 	}
+
+	public void SwitchToLogic()
+	{
+		GameObject selectedObj = editorController.GetSelectedObject ();
+		Debug.Log ("selected: " + selectedObj.name);
+		MMVR_Core.Instance.ToggleLogic (selectedObj);
+	}
 }

@@ -14,7 +14,10 @@ public class MMVR_Core : MonoBehaviour {
 	public GameObject playerStart;
 	public Text modeText;
 
+	//logic mode
+
 	private bool isPlaytesting=false;
+	private bool isLogic=false;
 
 	public enum Mode { 
 		SandboxEditor,
@@ -25,6 +28,22 @@ public class MMVR_Core : MonoBehaviour {
 	}
 
 	public Mode currentMode;
+
+	//IS A SINGLETON
+	private static MMVR_Core _instance;
+	public static MMVR_Core Instance{
+		get{
+			return _instance;
+		}
+	}
+
+	void Awake(){
+		if (_instance != null) {
+			Debug.Log ("Instance already exists!");
+			return;
+		}
+		_instance = this;
+	}
 	// Use this for initialization
 	void Start () {
 
@@ -42,6 +61,15 @@ public class MMVR_Core : MonoBehaviour {
 		
 	}
 
+	public void ToggleLogic(GameObject selectedObject)
+	{
+		isLogic = !isLogic;
+		if (isLogic)
+			ShowObjectLogic (selectedObject);
+		else
+			SwitchToEditor (selectedObject);
+	}
+
 	public void TogglePlaytest()
 	{
 		isPlaytesting = !isPlaytesting;
@@ -49,6 +77,18 @@ public class MMVR_Core : MonoBehaviour {
 			PlaytestLevel ();
 		else
 			StopPlaytest ();
+	}
+
+
+	//switch from whatever mode to "Logic" mode
+	void ShowObjectLogic(GameObject selectedObject)
+	{
+		
+	}
+
+	void SwitchToEditor(GameObject selectedObject)
+	{
+		
 	}
 
 	//switch from whatever mode to "play" level

@@ -28,8 +28,10 @@ public class PropertyPanelManager : MonoBehaviour {
 	void AddSkyboxPanel()
 	{
 		GameObject skyboxProperties = Instantiate (skyboxPropertiesPrefab, spawnPos, Quaternion.identity) as GameObject;
-		skyboxProperties.transform.parent = transform.GetChild (0).transform;
+//		skyboxProperties.transform.parent = transform.GetChild (0).transform;
+		skyboxProperties.transform.parent = transform;
 		skyboxProperties.transform.localPosition =spawnPos;
+		skyboxProperties.transform.localScale = Vector3.one;
 		propertyPanelDict.Add ("skybox", skyboxProperties);
 		skyboxProperties.SetActive (false);
 	}
@@ -56,6 +58,7 @@ public class PropertyPanelManager : MonoBehaviour {
 		GameObject propertiesObj = Instantiate (propertiesPrefab, spawnPos, Quaternion.identity) as GameObject;
 		propertiesObj.transform.parent = transform.transform;
 		propertiesObj.transform.localPosition =spawnPos;
+		propertiesObj.transform.localScale = Vector3.one;
 		propertyPanelDict.Add (keyToAdd, propertiesObj);
 		propertiesObj.SetActive (false);
 		return propertiesObj;

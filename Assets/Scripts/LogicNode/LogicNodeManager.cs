@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LogicNodeManager : MonoBehaviour {
 
 	public GameObject functionBoxPrefab;
+	public GameObject basicLayerPrefab;
 	public GameObject utilityBoxPrefab;
 	public GameObject beginBoxPrefab;
 	public GameObject tickBoxPrefab;
@@ -20,7 +21,9 @@ public class LogicNodeManager : MonoBehaviour {
 	public GameObject variableContent;
 	public List<GameObject> variableList;
 
+	public Dictionary<string,GameObject> logicLayerDict;
 
+	public GameObject selectedObjController;
 	private GameObject activePlaygroundObj;
 	private GameObject selectedVariable;
 
@@ -36,8 +39,11 @@ public class LogicNodeManager : MonoBehaviour {
 	private GameObject beginBox;
 	private GameObject tickBox;
 
+	GameObject activeLayer;
+
+	public Button sandboxButton;
+
 	private int index;
-	float canvasScale=1f;
 
 
 	private static LogicNodeManager _instance;
@@ -70,13 +76,15 @@ public class LogicNodeManager : MonoBehaviour {
 			return;
 		}
 		_instance = this;
-	}
-	// Use this for initialization
-	void Start () {
+		logicLayerDict = new Dictionary<string,GameObject> ();
 		functionBoxList = new List<GameObject> ();
 		utilityList = Resources.LoadAll<GameObject>("Logic/Utilities");
 		variableList = new List<GameObject> ();
-		SpawnBasicBoxes ();
+	}
+	// Use this for initialization
+	void Start () {
+		
+
 	}
 	
 	// Update is called once per frame
@@ -87,17 +95,26 @@ public class LogicNodeManager : MonoBehaviour {
 			RetrieveVariables ();
 	}
 
+	public void SpawnBasicLayer(GameObject associatedObj)
+	{
+		GameObject basicLayerObj = Instantiate (basicLayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+		basicLayerObj.transform.SetParent (logicParent, false);
+		basicLayerObj.transform.localPosition = Vector3.zero;
+		basicLayerObj.name = associatedObj.name + "_LogicLayer";
+		logicLayerDict.Add (associatedObj.name, basicLayerObj);
+		//then set it as inactive unless the object is selected in the hierarchy
+		basicLayerObj.SetActive (false);
+	}
+
 	void SpawnBasicBoxes()
 	{
 		Vector3 beginPos = Camera.main.ScreenToWorldPoint (beginBoxSpawnPos);
-		Debug.Log ("beginpos: " + beginPos.ToString ());
 		beginBox = Instantiate(beginBoxPrefab,beginPos,Quaternion.identity) as GameObject;
 		beginBox.transform.SetParent(logicParent,false);
 		beginBox.transform.localPosition = beginPos;
 		functionBoxList.Add (beginBox);
 
 		Vector3 tickPos = Camera.main.ScreenToWorldPoint (tickBoxSpawnPos);
-		Debug.Log ("tickpos: " + tickPos.ToString ());
 		tickBox = Instantiate(tickBoxPrefab,tickPos,Quaternion.identity) as GameObject;
 		tickBox.transform.SetParent(logicParent,false);
 		tickBox.transform.localPosition = tickPos;
@@ -109,6 +126,19 @@ public class LogicNodeManager : MonoBehaviour {
 		for(int i=0;i<variableList.Count;i++)
 		{
 			Debug.Log ("variable type:" + variableList [i].GetComponent<VariablePanel> ().varType.ToString ());
+		}
+	}
+
+	public void SwitchToLogicLayer(string objName)
+	{
+		if (activeLayer != null)
+			activeLayer.SetActive (false);
+		
+		GameObject resultObj;
+		bool result = logicLayerDict.TryGetValue (objName, out resultObj);
+		if (result) {
+			resultObj.SetActive (true);
+			activeLayer = resultObj;
 		}
 	}
 //	void OnGUI()

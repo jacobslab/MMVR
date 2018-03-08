@@ -39,9 +39,9 @@ public class ModifyTerrain : MonoBehaviour {
 	}
 
 
-	void Update()
+	void FixedUpdate()
 	{
-		if (Input.GetMouseButton(0)) {
+		if (Input.GetMouseButton(0) && MMVR_Core.Instance.currentMode == MMVR_Core.Mode.SandboxEditor && EditorCamController.Instance.GetSelectedObject().name=="terrain") {
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out hit, 1000))

@@ -13,7 +13,7 @@ public class PropertyPanelManager : MonoBehaviour {
 	public Vector3 spawnPos;
 	private GameObject currentActivePanel;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		propertyPanelDict= new Dictionary<string,GameObject> ();
 		AddSkyboxPanel ();
 	}
@@ -59,6 +59,8 @@ public class PropertyPanelManager : MonoBehaviour {
 		propertiesObj.transform.parent = transform.transform;
 		propertiesObj.transform.localPosition =spawnPos;
 		propertiesObj.transform.localScale = Vector3.one;
+		Debug.Log ("key to add: " + keyToAdd);
+		Debug.Log ("propertiesobj: " + propertiesObj.name);
 		propertyPanelDict.Add (keyToAdd, propertiesObj);
 		propertiesObj.SetActive (false);
 		return propertiesObj;

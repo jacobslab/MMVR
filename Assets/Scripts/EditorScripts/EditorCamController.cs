@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 public class EditorCamController : MonoBehaviour {
 	GameObject selectedObj;
-	OrbitMouse mouseOrbit;
 
 	public PlaceManager placeManager;
 	public ObjectPanelManager panelManager;
@@ -17,7 +16,6 @@ public class EditorCamController : MonoBehaviour {
 	private EventManager eventManager;
 	public List<string> spawnToJson;
 
-	float mouseXDelta,mouseYDelta=0f;
 	//EXPERIMENT IS A SINGLETON
 	private static EditorCamController _instance;
 	public static EditorCamController Instance{
@@ -32,7 +30,6 @@ public class EditorCamController : MonoBehaviour {
 			return;
 		}
 		_instance = this;
-		mouseOrbit = GetComponent<OrbitMouse> ();
 
 		//event handler associations 
 		EventManager.OnDestroyed += Destroy;
@@ -101,6 +98,7 @@ public class EditorCamController : MonoBehaviour {
 		cleanedName = Regex.Replace (cleanedName, "[_]", string.Empty);
 
 		placeManager.propertyManager.SwitchToPanel (objSelected.name);
+		MMVR_Core.Instance.logicManager.SwitchToLogicLayer (objSelected.name);
 //		if (selectedObj != null)
 //			mouseOrbit.target = selectedObj.transform;
 	}

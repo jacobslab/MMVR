@@ -7,6 +7,10 @@ public class SandboxEditorManager : MonoBehaviour {
 
 	public Camera sandBoxCamera;
 	public CanvasGroup propertyPanelGroup;
+	public GameObject sandboxCanvasObj;
+
+	public Button sandboxButton;
+	public Button logicButton;
 	// Use this for initialization
 	void Start () {
 		
@@ -24,6 +28,15 @@ public class SandboxEditorManager : MonoBehaviour {
 		else
 			propertyPanelGroup.alpha = 0f;
 	}
+	public void ToggleSandboxCanvas(bool shouldEnable)
+	{
+		if (shouldEnable)
+			sandboxCanvasObj.SetActive (true);
+		else
+			sandboxCanvasObj.SetActive (false);
+	}
+
+
 
 	public void ToggleCamera(bool shouldEnable)
 	{

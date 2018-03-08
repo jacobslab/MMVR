@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 120531604300632708}
   - component: {fileID: 64478772203384658}
   - component: {fileID: 114620928757838052}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BezierPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,6 +75,9 @@ MonoBehaviour:
   numberOfPoints: 20
   useWorldSpace: 1
   outPin: {fileID: 0}
+  isSet: 0
+  start: {fileID: 0}
+  end: {fileID: 0}
 --- !u!120 &120531604300632708
 LineRenderer:
   m_ObjectHideFlags: 1

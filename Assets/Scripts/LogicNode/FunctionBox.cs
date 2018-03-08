@@ -21,6 +21,7 @@ public class FunctionBox : InteractableUIElement {
 	public Button inPin;
 	public Button outPin;
 
+	Transform originalParent;
 	List<GameObject> outBezierList;
 
 	Vector3 lastClickedPos;
@@ -34,6 +35,8 @@ public class FunctionBox : InteractableUIElement {
 		activeSequence = new List<IEnumerator> ();
 		utilitiesConnected = new List<UtilityBox> ();
 		Debug.Log (transform.position.ToString ());
+
+		originalParent = transform.parent;
 	}
 	
 	// Update is called once per frame
@@ -132,6 +135,11 @@ public class FunctionBox : InteractableUIElement {
 	{
 		transform.SetParent (canvasTransform, true);
 	}
+
+	public override void OnPointerExit(PointerEventData eventData)
+	{
+		transform.SetParent (originalParent, true);
+	}
 	public override void OnBeginDrag(PointerEventData data)
 	{
 		//Debug.Log("They started dragging " + this.name);
@@ -158,12 +166,15 @@ public class FunctionBox : InteractableUIElement {
 			Debug.Log ("bezier obj: " + outBezierList [outBezierList.Count - 1].gameObject.name);
 			result = false;
 		} else {
-			Debug.Log ("FALSE");
+//			Debug.Log ("FALSE");
 			Destroy (activeBezierCurve);
 			activeBezierCurve = null;
 		}
 
-		Debug.Log ("out connecting is false");
+		transform.SetParent (originalParent, true);
+
+
+//		Debug.Log ("out connecting is false");
 		outConnecting = false;
 	}
 	public override void OnDrag(PointerEventData data)

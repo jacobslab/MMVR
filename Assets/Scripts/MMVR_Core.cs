@@ -6,14 +6,19 @@ using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UI;
 public class MMVR_Core : MonoBehaviour {
 
-	public PropertyPanelManager propertyPanelManager;
+	//mode managers
 	public SandboxEditorManager sandboxManager;
+	public LogicNodeManager logicManager;
+
+	public PropertyPanelManager propertyPanelManager;
+
 	public GameObject fpsControllerPrefab;
 	private FirstPersonController fpsController;
 	public EditorButton editorButton;
 	public GameObject playerStart;
 	public Text modeText;
 
+	public GameObject logicModeCanvas;
 	//logic mode
 
 	private bool isPlaytesting=false;
@@ -49,6 +54,7 @@ public class MMVR_Core : MonoBehaviour {
 
 		sandboxManager.ToggleCamera (true);
 		currentMode = Mode.SandboxEditor;
+		ToggleBetweenModes (currentMode);
 		Time.timeScale = 0f;
 		modeText.text = currentMode.ToString();
 	}
@@ -83,12 +89,26 @@ public class MMVR_Core : MonoBehaviour {
 	//switch from whatever mode to "Logic" mode
 	void ShowObjectLogic(GameObject selectedObject)
 	{
-		
+		currentMode = Mode.LogicEditor;
+		logicModeCanvas.SetActive (true);
+
+		ToggleBetweenModes (currentMode);
+
+		sandboxManager.ToggleSandboxCanvas (false);
+		sandboxManager.TogglePropertyPanel (false);
+		sandboxManager.ToggleCamera (false);
 	}
 
 	void SwitchToEditor(GameObject selectedObject)
 	{
-		
+
+		currentMode = Mode.SandboxEditor;
+		logicModeCanvas.SetActive (false);
+		ToggleBetweenModes (currentMode);
+
+		sandboxManager.ToggleSandboxCanvas (true);
+		sandboxManager.TogglePropertyPanel (true);
+		sandboxManager.ToggleCamera (true);
 	}
 
 	//switch from whatever mode to "play" level
@@ -122,4 +142,36 @@ public class MMVR_Core : MonoBehaviour {
 		if (fpsController != null)
 			Destroy (fpsController.gameObject);
 	}
+
+	public void SpawnLogicLayer(GameObject spawnedObj)
+	{
+		Debug.Log ("spawnedobj: " + spawnedObj.name);
+		logicManager.SpawnBasicLayer (spawnedObj);
+	}
+
+	//button management
+
+	void DisableAllModeButtons()
+	{
+		logicManager.sandboxButton.gameObject.SetActive (false);
+		sandboxManager.logicButton.gameObject.SetActive (false);
+	}
+
+	public void ToggleBetweenModes(MMVR_Core.Mode mode)
+	{
+		//first disable all buttons
+		DisableAllModeButtons ();
+
+		//then selectively enable the necessary ones
+		switch (mode) 
+		{
+		case MMVR_Core.Mode.SandboxEditor:
+			sandboxManager.logicButton.gameObject.SetActive (true);
+			break;
+		case MMVR_Core.Mode.LogicEditor:
+			logicManager.sandboxButton.gameObject.SetActive (true);
+			break;
+		}
+	}
+
 }

@@ -58,6 +58,8 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Terrain,newObj.gameObj);
 
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+
 	}
 	public void SetSkybox()
 	{
@@ -72,6 +74,8 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.PlayerStart,newObj.gameObj);
 
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+
 	}
 
 	public void CreateCube(Vector3 pos)
@@ -85,6 +89,8 @@ public class PlaceManager : MonoBehaviour {
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Cube,newObj.gameObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		cubeIndex++;
 	}
 
@@ -96,6 +102,8 @@ public class PlaceManager : MonoBehaviour {
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Building,newObj.gameObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		buildingIndex++;
 	}
 
@@ -108,6 +116,8 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.spawnedObjList.Add (newObj);
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		cubeIndex++;
 	}
 
@@ -119,6 +129,8 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.spawnedObjList.Add (newObj);
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		charIndex++;
 	}
 	public void CreateCharacter(string name, Vector3 pos, Vector3 rot)
@@ -128,6 +140,8 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.spawnedObjList.Add (newObj);
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		charIndex++;
 	}
 

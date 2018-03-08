@@ -87,12 +87,14 @@ public class GenericProperties : MonoBehaviour {
 
 	public void CheckPhysics()
 	{
-		if (enablePhysics.isOn) {
+		if (associatedObj != null) {
+			if (enablePhysics.isOn) {
 				associatedObj.GetComponent<Rigidbody> ().isKinematic = false;
-			associatedObj.GetComponent<Rigidbody> ().useGravity = true;
-		} else {
-			associatedObj.GetComponent<Rigidbody> ().isKinematic =true;
-			associatedObj.GetComponent<Rigidbody> ().useGravity = false;
+				associatedObj.GetComponent<Rigidbody> ().useGravity = true;
+			} else {
+				associatedObj.GetComponent<Rigidbody> ().isKinematic = true;
+				associatedObj.GetComponent<Rigidbody> ().useGravity = false;
+			}
 		}
 	}
 

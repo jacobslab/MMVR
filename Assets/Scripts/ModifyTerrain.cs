@@ -39,34 +39,37 @@ public class ModifyTerrain : MonoBehaviour {
 	}
 
 
-	void FixedUpdate()
+	void Update()
 	{
-		if (Input.GetMouseButton(0) && MMVR_Core.Instance.currentMode == MMVR_Core.Mode.SandboxEditor && EditorCamController.Instance.GetSelectedObject().name=="terrain") {
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out hit, 1000))
-			{
-				Vector2 normPoints = new Vector2 (hit.point.x - terrainPos.x, hit.point.z- terrainPos.z);
-				if(TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Paint)
-					ChangeSplatmap (normPoints);
-				if (Input.GetKey (KeyCode.LeftShift)) {
-					if(TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Height)
-						ChangeHeightmap (normPoints, TerrainModes.Subtractive);
-					else if(TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
-						ChangeDetailMap (normPoints,TerrainModes.Subtractive);
-					else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Tree)
-						PaintTrees (hit.point, TerrainModes.Subtractive);
-				} else {
-					if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Height)
-						ChangeHeightmap (normPoints, TerrainModes.Additive);
-					else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
-						ChangeDetailMap (normPoints, TerrainModes.Additive);
-					else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Tree)
-						PaintTrees (hit.point, TerrainModes.Additive);
+		if (Input.GetMouseButton(0) && MMVR_Core.Instance.currentMode == MMVR_Core.Mode.SandboxEditor) {
+			if (EditorCamController.Instance.GetSelectedObject () != null) {
+				if (EditorCamController.Instance.GetSelectedObject ().name == "terrain") {
+					RaycastHit hit;
+					Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+					if (Physics.Raycast (ray, out hit, 1000)) {
+						Vector2 normPoints = new Vector2 (hit.point.x - terrainPos.x, hit.point.z - terrainPos.z);
+						if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Paint)
+							ChangeSplatmap (normPoints);
+						if (Input.GetKey (KeyCode.LeftShift)) {
+							if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Height)
+								ChangeHeightmap (normPoints, TerrainModes.Subtractive);
+							else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
+								ChangeDetailMap (normPoints, TerrainModes.Subtractive);
+							else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Tree)
+								PaintTrees (hit.point, TerrainModes.Subtractive);
+						} else {
+							if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Height)
+								ChangeHeightmap (normPoints, TerrainModes.Additive);
+							else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Detail)
+								ChangeDetailMap (normPoints, TerrainModes.Additive);
+							else if (TerrainProperties.terrainMode == TerrainProperties.TerrainMode.Tree)
+								PaintTrees (hit.point, TerrainModes.Additive);
 					
+						}
+					}
 				}
 			}
-		}
+	}
 	}
 
 	void ResetTerrain()

@@ -17,6 +17,8 @@ public class PlaceManager : MonoBehaviour {
 	private int buildingIndex=0;
 	private int cubeIndex=0;
 	private int charIndex=0;
+	private int roadIndex=0;
+	private int wallIndex=0;
 	public GameObject terrainPrefab;
 	public Terrain terrainData;
 	public Texture2D[] textureArr;
@@ -105,6 +107,31 @@ public class PlaceManager : MonoBehaviour {
 
 		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		buildingIndex++;
+	}
+	public void CreateRoad(Vector3 pos)
+	{
+		string name = "road_" + buildingIndex.ToString ();
+		SpawnableObject newObj = new SpawnableObject (name, pos,Vector3.zero,SpawnableObject.ObjectType.Road);
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject (name,newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Road,newObj.gameObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+		roadIndex++;
+	}
+
+	public void CreateWall(Vector3 pos)
+	{
+		string name = "wall_" + buildingIndex.ToString ();
+		SpawnableObject newObj = new SpawnableObject (name, pos,Vector3.zero,SpawnableObject.ObjectType.Wall);
+		hierarchyManager.spawnedObjList.Add (newObj);
+		GameObject newText = objPanelManager.AddTextObject (name,newObj);
+		hierarchyManager.AddDictEntry (newText, newObj);
+		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Wall,newObj.gameObj);
+
+		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+		wallIndex++;
 	}
 
 	public void CreateCube(string name, Vector3 pos, Vector3 rot)

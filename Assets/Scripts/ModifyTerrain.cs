@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq; // used for Sum of array
-using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 public class ModifyTerrain : MonoBehaviour {

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿	using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +8,9 @@ public class TerrainProperties : MonoBehaviour {
 	public Texture2D[] textureArr;
 	public static int targetSplatTextureIndex=0;
 	private CanvasGroup textureGroup;
+	public Slider brushRadiusSlider;
+
+	public int brushRadius=5;
 	public enum TerrainMode
 	{
 		Paint,
@@ -23,6 +26,11 @@ public class TerrainProperties : MonoBehaviour {
 		for (int i = 0; i < 4; i++) {
 			textureGroup = transform.GetChild (0).gameObject.GetComponent<CanvasGroup> ();
 			textureArr [i] = (Texture2D)transform.GetChild(0).GetChild (i).GetComponent<RawImage> ().texture;
+		}
+
+		if (terrainObj != null) {
+			terrainObj.GetComponent<ModifyTerrain> ().SetTerrainProperties (this.gameObject.GetComponent<TerrainProperties> ());
+			Debug.Log ("set terrain properties");
 		}
 		
 	}
@@ -73,6 +81,12 @@ public class TerrainProperties : MonoBehaviour {
 		}
 		terrainData.splatPrototypes = splatPrototype;
 	}
+
+	public void UpdateRadius()
+	{
+		brushRadius = (int)brushRadiusSlider.value;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		

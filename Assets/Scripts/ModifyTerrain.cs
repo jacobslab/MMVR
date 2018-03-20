@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq; // used for Sum of array
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 public class ModifyTerrain : MonoBehaviour {
 
 
@@ -21,6 +22,7 @@ public class ModifyTerrain : MonoBehaviour {
 	float[,] heightmapData;
 	int[,] detailmapData;
 	public GameObject treePrefab;
+	private TerrainProperties terrainPropertiesRef;
 
 	int treeLayer= 1<<10;
 	void Start () {
@@ -36,6 +38,13 @@ public class ModifyTerrain : MonoBehaviour {
 		ResetTerrain ();
 
 	}
+
+	public void SetTerrainProperties(TerrainProperties terrainPropObj)
+	{
+		terrainPropertiesRef = terrainPropObj;
+	}
+
+
 
 
 	void Update()
@@ -116,8 +125,8 @@ public class ModifyTerrain : MonoBehaviour {
 
 		int mapX = Mathf.RoundToInt((normPoints.x/terrainData.size.x)*terrainData.detailWidth);
 		int mapZ = Mathf.RoundToInt((normPoints.y / terrainData.size.z) * terrainData.detailHeight);
-		for (int x = (mapX-5); x < (mapX+5); x++) {
-			for (int y = (mapZ-5); y < (mapZ+5); y++) {
+		for (int x = (mapX-terrainPropertiesRef.brushRadius); x < (mapX+terrainPropertiesRef.brushRadius); x++) {
+			for (int y = (mapZ-terrainPropertiesRef.brushRadius); y < (mapZ+terrainPropertiesRef.brushRadius); y++) {
 				if (terrainMode == TerrainModes.Additive)
 					detailmapData [y, x] = 1;
 				else
@@ -149,9 +158,9 @@ public class ModifyTerrain : MonoBehaviour {
 		int mapX = Mathf.RoundToInt((normPoints.x/terrainData.size.x)*terrainData.heightmapWidth);
 		int mapZ = Mathf.RoundToInt((normPoints.y / terrainData.size.z) * terrainData.heightmapHeight);
 
-		for (int y = mapZ-5; y < (mapZ+5); y++)
+		for (int y = mapZ-terrainPropertiesRef.brushRadius; y < (mapZ+terrainPropertiesRef.brushRadius); y++)
 		{
-			for (int x = mapX-5 ; x < (mapX+5); x++)
+			for (int x = mapX-terrainPropertiesRef.brushRadius ; x < (mapX+terrainPropertiesRef.brushRadius); x++)
 			{
 				if (terrainMode == TerrainModes.Additive) {
 					heightmapData [y, x] += 0.001f;
@@ -172,13 +181,18 @@ public class ModifyTerrain : MonoBehaviour {
 		int mapZ = Mathf.RoundToInt((normPoints.y / terrainData.size.z) * terrainData.alphamapHeight);
 
 		//then apply the appropriate splatmap
-		for(int i=mapX-5;i<(mapX+5);i++)
+		for(int i=mapX-terrainPropertiesRef.brushRadius;i<(mapX+terrainPropertiesRef.brushRadius) && i>0 && i<terrainData.alphamapHeight;i++)
 		{
-			for (int j = mapZ - 5; j < (mapZ + 5); j++) {
+			for (int j = mapZ - terrainPropertiesRef.brushRadius; j < (mapZ + terrainPropertiesRef.brushRadius) && j>0 && j<terrainData.alphamapWidth; j++) {
 				for (int k = 0; i < 4; k++) {
 					splatmapData [j, i, k] = 0f;
 					terrainData.SetAlphamaps(0, 0, splatmapData);
 				}
+				if (j < 0)
+					j = 0;
+				if (i > terrainData.alphamapResolution)
+					i = terrainData.alphamapResolution;
+				Debug.Log ("j: " + j.ToString () + " and i: " + i.ToString ());
 				splatmapData [j,i, TerrainProperties.targetSplatTextureIndex] = 0.3f;
 			}
 		}

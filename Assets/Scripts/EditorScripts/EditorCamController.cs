@@ -16,6 +16,9 @@ public class EditorCamController : MonoBehaviour {
 	private EventManager eventManager;
 	public List<string> spawnToJson;
 
+	public GameObject transformHandlePrefab;
+	private GameObject transformHandleObj;
+
 	//EXPERIMENT IS A SINGLETON
 	private static EditorCamController _instance;
 	public static EditorCamController Instance{
@@ -36,7 +39,8 @@ public class EditorCamController : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		
+		transformHandleObj = Instantiate (transformHandlePrefab, Vector3.zero, Quaternion.identity) as GameObject;
+
 	}
 	
 	// Update is called once per frame
@@ -97,10 +101,18 @@ public class EditorCamController : MonoBehaviour {
 		string cleanedName = Regex.Replace(objSelected.name, @"[\d-]", string.Empty);
 		cleanedName = Regex.Replace (cleanedName, "[_]", string.Empty);
 
+//		SpawnTransformHandles (objSelected);
 		placeManager.propertyManager.SwitchToPanel (objSelected.name);
 		MMVR_Core.Instance.logicManager.SwitchToLogicLayer (objSelected.name);
 //		if (selectedObj != null)
 //			mouseOrbit.target = selectedObj.transform;
+	}
+
+	void SpawnTransformHandles(GameObject objSelected)
+	{
+		transformHandleObj.transform.parent = objSelected.transform;
+		transformHandleObj.transform.localPosition = Vector3.zero;
+		transformHandleObj.transform.localRotation = Quaternion.identity;
 	}
 		
 

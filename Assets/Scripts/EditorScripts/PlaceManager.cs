@@ -123,7 +123,7 @@ public class PlaceManager : MonoBehaviour {
 
 	public void CreateWall(Vector3 pos)
 	{
-		string name = "wall_" + buildingIndex.ToString ();
+		string name = "wall_" + wallIndex.ToString ();
 		SpawnableObject newObj = new SpawnableObject (name, pos,Vector3.zero,SpawnableObject.ObjectType.Wall);
 		hierarchyManager.spawnedObjList.Add (newObj);
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);

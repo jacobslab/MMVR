@@ -45,6 +45,8 @@ public class LogicNodeManager : MonoBehaviour {
 
 	private int index;
 
+	public delegate void LogicEvent();
+	public static event LogicEvent OnVariableUpdate;
 
 	private static LogicNodeManager _instance;
 	public static LogicNodeManager Instance{
@@ -139,10 +141,11 @@ public class LogicNodeManager : MonoBehaviour {
 		if (result) {
 			resultObj.SetActive (true);
 			activeLayer = resultObj;
+			logicParent = resultObj.transform;
 		}
 	}
-//	void OnGUI()
 //	{
+	//	void OnGUI()
 //		Event currentEvent = Event.current;
 //		if (currentEvent.type == EventType.ScrollWheel) {
 //			if (currentEvent.delta.y > 0f) {
@@ -191,6 +194,10 @@ public class LogicNodeManager : MonoBehaviour {
 		variableGroupObj.GetComponent<VariablePanel> ().variableName.text = "Variable_"+variableIndex.ToString();
 		variableList.Add (variableGroupObj);
 		variableIndex++;
+
+		//on updating
+		if(OnVariableUpdate!=null)
+			OnVariableUpdate ();
 	}
 
 

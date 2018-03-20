@@ -7,6 +7,7 @@ public class ObjectManipulator : MonoBehaviour {
 
 	public SpawnableObject.ObjectType objType;
 	bool mouseDown=false;
+	private float fixedDist=0f;
 	Color originalColor;
 	// Use this for initialization
 	void Start () {
@@ -15,8 +16,11 @@ public class ObjectManipulator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (mouseDown)
-			transform.position = Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x,Input.mousePosition.y,10f));
+		if (mouseDown) {
+
+//			Debug.Log ("fixed dist is: " + fixedDist.ToString());
+			transform.position = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, fixedDist));
+		}
 	}
 
 	void OnMouseDown()
@@ -24,6 +28,9 @@ public class ObjectManipulator : MonoBehaviour {
 		//	originalColor = gameObject.GetComponent<Renderer> ().material.color;
 		//	gameObject.GetComponent<Renderer> ().material.color = Color.yellow;
 			gameObject.GetComponent<BoxCollider> ().enabled = false;
+
+		fixedDist=Vector3.Distance (transform.position, Camera.main.transform.position);
+		Debug.Log ("fixed dist is: " + fixedDist.ToString ());
 			editorController.SetSelectedObject(this.gameObject);
 			mouseDown = true;
 	}

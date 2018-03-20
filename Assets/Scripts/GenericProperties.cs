@@ -38,9 +38,7 @@ public class GenericProperties : MonoBehaviour {
 
 			CheckPhysics ();
 			CheckCollision ();
-		} else 
-		{
-				rigidbody = associatedObj.GetComponent<Rigidbody> ();
+			rigidbody = associatedObj.GetComponent<Rigidbody> ();
 		}
 	}
 

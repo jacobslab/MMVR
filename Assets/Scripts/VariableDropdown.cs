@@ -14,6 +14,7 @@ public class VariableDropdown : MonoBehaviour {
 		optionDropdown = GetComponent<Dropdown> ();
 		varNamesList = new List<string> ();
 		BuildVariableList ();
+		LogicNodeManager.OnVariableUpdate += BuildVariableList;
 		
 	}
 	

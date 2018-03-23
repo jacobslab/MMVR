@@ -55,8 +55,8 @@ public class SelectedObjectController : MonoBehaviour {
 
 	public void SwitchToLogic()
 	{
-		GameObject selectedObj = editorController.GetSelectedObject ();
-		Debug.Log ("selected: " + selectedObj.name);
-		MMVR_Core.Instance.ToggleLogic (selectedObj);
+//		GameObject selectedObj = editorController.GetSelectedObject ();
+//		Debug.Log ("selected: " + selectedObj.name);
+		MMVR_Core.Instance.ToggleLogic ();
 	}
 }

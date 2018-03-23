@@ -192,7 +192,7 @@ public class ModifyTerrain : MonoBehaviour {
 					j = 0;
 				if (i > terrainData.alphamapResolution)
 					i = terrainData.alphamapResolution;
-				Debug.Log ("j: " + j.ToString () + " and i: " + i.ToString ());
+//				Debug.Log ("j: " + j.ToString () + " and i: " + i.ToString ());
 				splatmapData [j,i, TerrainProperties.targetSplatTextureIndex] = 0.3f;
 			}
 		}

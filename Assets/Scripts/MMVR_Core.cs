@@ -67,13 +67,13 @@ public class MMVR_Core : MonoBehaviour {
 		
 	}
 
-	public void ToggleLogic(GameObject selectedObject)
+	public void ToggleLogic()
 	{
 		isLogic = !isLogic;
 		if (isLogic)
-			ShowObjectLogic (selectedObject);
+			ShowObjectLogic ();
 		else
-			SwitchToEditor (selectedObject);
+			SwitchToEditor ();
 	}
 
 	public void TogglePlaytest()
@@ -87,7 +87,7 @@ public class MMVR_Core : MonoBehaviour {
 
 
 	//switch from whatever mode to "Logic" mode
-	void ShowObjectLogic(GameObject selectedObject)
+	void ShowObjectLogic()
 	{
 		currentMode = Mode.LogicEditor;
 		logicModeCanvas.SetActive (true);
@@ -99,7 +99,7 @@ public class MMVR_Core : MonoBehaviour {
 		sandboxManager.ToggleCamera (false);
 	}
 
-	void SwitchToEditor(GameObject selectedObject)
+	void SwitchToEditor()
 	{
 
 		currentMode = Mode.SandboxEditor;
@@ -146,7 +146,7 @@ public class MMVR_Core : MonoBehaviour {
 	public void SpawnLogicLayer(GameObject spawnedObj)
 	{
 		Debug.Log ("spawnedobj: " + spawnedObj.name);
-		logicManager.SpawnBasicLayer (spawnedObj);
+//		logicManager.SpawnBasicLayer (spawnedObj);
 	}
 
 	//button management

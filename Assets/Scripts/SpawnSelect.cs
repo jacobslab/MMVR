@@ -27,7 +27,6 @@ public class SpawnSelect : InteractableUIElement {
 	{
 		
 	}
-
 	public void OnSelectButton()
 	{
 		Debug.Log ("click the text");

@@ -27,7 +27,6 @@ public class InteractableUIElement:  MonoBehaviour,IPointerEnterHandler,IPointer
 	}
 	public virtual void OnPointerDown( PointerEventData eventData )
 	{
-
 		selected=true;
 		SelectObject();
 

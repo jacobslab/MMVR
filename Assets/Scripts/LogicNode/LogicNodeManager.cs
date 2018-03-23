@@ -11,6 +11,8 @@ public class LogicNodeManager : MonoBehaviour {
 	public GameObject beginBoxPrefab;
 	public GameObject tickBoxPrefab;
 
+	public Transform layerParent;
+
 	public Transform logicParent;
 	public List<GameObject> functionBoxList;
 
@@ -97,13 +99,14 @@ public class LogicNodeManager : MonoBehaviour {
 			RetrieveVariables ();
 	}
 
-	public void SpawnBasicLayer(GameObject associatedObj)
+	public void SpawnBasicLayer(string phaseName)
 	{
 		GameObject basicLayerObj = Instantiate (basicLayerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-		basicLayerObj.transform.SetParent (logicParent, false);
+		basicLayerObj.transform.SetParent (layerParent, false);
 		basicLayerObj.transform.localPosition = Vector3.zero;
-		basicLayerObj.name = associatedObj.name + "_LogicLayer";
-		logicLayerDict.Add (associatedObj.name, basicLayerObj);
+		basicLayerObj.name = phaseName;
+//		basicLayerObj.name = associatedObj.name + "_LogicLayer";
+		logicLayerDict.Add (phaseName, basicLayerObj);
 		//then set it as inactive unless the object is selected in the hierarchy
 		basicLayerObj.SetActive (false);
 	}

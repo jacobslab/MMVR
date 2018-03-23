@@ -8,6 +8,7 @@ public class ObjectPanelManager : MonoBehaviour {
 	public GameObject textPrefab;
 	private int index=0;
 	public static int selectedIndex=0;
+	public HierarchyManager hierarchyManager;
 	// Use this for initialization
 	void OnEnable () {
 
@@ -38,17 +39,18 @@ public class ObjectPanelManager : MonoBehaviour {
 	public GameObject AddTextObject(string text,SpawnableObject obj)
 	{
 		//Debug.Log ("spawned text");
-		GameObject newText = Instantiate (textPrefab);
-		newText.GetComponent<Text> ().text = text;
-		newText.transform.parent = this.transform;
-		newText.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (30f,150f + (index * -90f), 0f);
-		newText.GetComponent<SpawnSelect> ().associatedObj = obj.gameObj;
-		newText.GetComponent<SpawnSelect> ().assignedIndex = index;
+		GameObject newTextObj = Instantiate (textPrefab);
+		newTextObj.GetComponent<HierarchyObject> ().ChangeName(text);
+		newTextObj.transform.parent = this.transform;
+		newTextObj.GetComponent<RectTransform> ().anchoredPosition3D = new Vector3 (30f,150f + (index * -90f), 0f);
+		newTextObj.GetComponent<HierarchyObject> ().spawnSelect.associatedObj = obj.gameObj;
+		newTextObj.GetComponent<HierarchyObject> ().spawnSelect.assignedIndex = index;
+
 
 		//increment the index then
 		IncrementIndex();
 
-		return newText;
+		return newTextObj;
 
 	}
 }

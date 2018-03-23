@@ -5,9 +5,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class SpawnSelect : InteractableUIElement {
 
+	public Button hierarchyButton;
 	public GameObject associatedObj;
 	public int assignedIndex=0;
 	private Text textComp;
+
+	public Color normalColor;
+	public Color selectedColor;
 	// Use this for initialization
 	void Start () {
 		textComp = GetComponent<Text> ();
@@ -17,21 +21,20 @@ public class SpawnSelect : InteractableUIElement {
 	void Update () {
 		
 	}
-	public void OnPointerEnter( PointerEventData eventData )
-	{
-	}
-	public override void OnPointerDown( PointerEventData eventData )
-	{
-//		Debug.Log ("click the text");
-		SelectObject();
 
-		//make the selected index of hierarchy equal to your assigned index
-		ObjectPanelManager.selectedIndex = assignedIndex;
-	}
 
 	public void DestroyObject()
 	{
 		
+	}
+
+	public void OnSelectButton()
+	{
+		Debug.Log ("click the text");
+		SelectObject();
+
+		//make the selected index of hierarchy equal to your assigned index
+		ObjectPanelManager.selectedIndex = assignedIndex;
 	}
 
 	public void AdjustPosition()
@@ -47,17 +50,20 @@ public class SpawnSelect : InteractableUIElement {
 
 
 
-	public override void SelectObject()
+	public void Select()
 	{
 		textComp.color = Color.red;
 		selected = true;
+		hierarchyButton.image.color = selectedColor;
 		EditorCamController.Instance.SetSelectedObject (associatedObj);
 
 	}
 
-	public override void DeselectObject()
+	public void Deselect()
 	{
+		Debug.Log ("deselected");
 		textComp.color = Color.black;
+		hierarchyButton.image.color = normalColor;
 		selected = false;
 	}
 

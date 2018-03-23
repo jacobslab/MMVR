@@ -60,7 +60,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Terrain,newObj.gameObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 
 	}
 	public void SetSkybox()
@@ -76,7 +76,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.PlayerStart,newObj.gameObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 
 	}
 
@@ -92,7 +92,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Cube,newObj.gameObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		cubeIndex++;
 	}
 
@@ -105,7 +105,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Building,newObj.gameObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		buildingIndex++;
 	}
 	public void CreateRoad(Vector3 pos)
@@ -117,7 +117,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Road,newObj.gameObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		roadIndex++;
 	}
 
@@ -130,7 +130,7 @@ public class PlaceManager : MonoBehaviour {
 		hierarchyManager.AddDictEntry (newText, newObj);
 		propertyManager.AddPropertyPanel (SpawnableObject.ObjectType.Wall,newObj.gameObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		wallIndex++;
 	}
 
@@ -144,7 +144,7 @@ public class PlaceManager : MonoBehaviour {
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		cubeIndex++;
 	}
 
@@ -157,7 +157,7 @@ public class PlaceManager : MonoBehaviour {
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		charIndex++;
 	}
 	public void CreateCharacter(string name, Vector3 pos, Vector3 rot)
@@ -168,7 +168,7 @@ public class PlaceManager : MonoBehaviour {
 		GameObject newText = objPanelManager.AddTextObject (name,newObj);
 		hierarchyManager.AddDictEntry (newText, newObj);
 
-		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
+//		MMVR_Core.Instance.SpawnLogicLayer (newObj.gameObj);
 		charIndex++;
 	}
 

@@ -9,6 +9,23 @@ public class HierarchyManager : MonoBehaviour {
 	public Dictionary<GameObject,SpawnableObject> textSpawnableDict;
 	public List<GameObject> spawnSelectTextObj;
 	public List<SpawnableObject> spawnedObjList;
+
+	public HierarchyObject selectedHierarchyObject;
+
+	//singleton
+	private static HierarchyManager _instance;
+	public static HierarchyManager Instance{
+		get{
+			return _instance;
+		}
+	}
+	void Awake(){
+		if (_instance != null) {
+			Debug.Log ("Instance already exists!");
+			return;
+		}
+		_instance = this;
+	}
 	// Use this for initialization
 	void Start () {
 		textSpawnableDict = new Dictionary<GameObject, SpawnableObject>();
@@ -35,7 +52,13 @@ public class HierarchyManager : MonoBehaviour {
 			keyList [i].GetComponent<SpawnSelect> ().AdjustPosition ();
 		}
 	}
-	
+	public void UpdateSelection(HierarchyObject newObj)
+	{
+		if(selectedHierarchyObject!=null)
+			selectedHierarchyObject.DeselectObject ();
+		
+		selectedHierarchyObject = newObj;
+	}
 	// Update is called once per frame
 	void Update () {
 		

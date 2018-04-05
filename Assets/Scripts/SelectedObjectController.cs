@@ -5,15 +5,14 @@ using UnityEngine.UI;
 public class SelectedObjectController : MonoBehaviour {
 
 	EditorCamController editorController { get { return EditorCamController.Instance; }}
-	public enum ObjectMode {
-		Select,
-		Move
-	}
-	public ObjectMode objMode;
+
+	public EditorCamController.ObjectMode objMode;
 	public Button selectButton;
 	public Button moveButton;
+	public Button rotateButton;
 	// Use this for initialization
 	void Start () {
+		SwitchToSelectMode ();
 		selectButton.Select ();
 	}
 	
@@ -24,19 +23,43 @@ public class SelectedObjectController : MonoBehaviour {
 
 	public void SwitchToSelectMode()
 	{
-		objMode = ObjectMode.Select;
-
-		moveButton.transform.GetChild (1).GetComponent<Image> ().color = Color.white;
-		selectButton.transform.GetChild (1).GetComponent<Image> ().color = Color.yellow;
+		objMode =EditorCamController.ObjectMode.Select;
+		DeselectAllButtons ();
+		selectButton.GetComponent<Image> ().color = Color.yellow;
+		UpdateObjectMode ();
 	}
 
 	public void SwitchToMoveMode()
 	{
-		objMode = ObjectMode.Move;
-		selectButton.transform.GetChild (1).GetComponent<Image> ().color = Color.white;
-		moveButton.transform.GetChild (1).GetComponent<Image> ().color = Color.yellow;
+		objMode = EditorCamController.ObjectMode.Move;
+		DeselectAllButtons ();
+		moveButton.GetComponent<Image> ().color = Color.yellow;
+		UpdateObjectMode ();
 	}
 
+	public void SwitchToRotateMode()
+	{
+		objMode = EditorCamController.ObjectMode.Rotate;
+		DeselectAllButtons ();
+		rotateButton.GetComponent<Image> ().color = Color.yellow;
+		UpdateObjectMode ();
+	}
+
+	void UpdateObjectMode()
+	{
+		GameObject selectedObj = editorController.GetSelectedObject ();
+		if (selectedObj != null) {
+			if (selectedObj.name != "terrain")
+				selectedObj.GetComponent<ObjectManipulator> ().objMode = objMode;
+		}
+	}
+
+	void DeselectAllButtons ()
+	{
+		moveButton.GetComponent<Image> ().color = Color.white;
+		rotateButton.GetComponent<Image> ().color = Color.white;
+		selectButton.GetComponent<Image> ().color = Color.white;
+	}
 	public void RotateAnticlockwise()
 	{
 		GameObject selectedObj = editorController.GetSelectedObject ();
@@ -48,7 +71,6 @@ public class SelectedObjectController : MonoBehaviour {
 	{
 		GameObject selectedObj = editorController.GetSelectedObject ();
 		if (selectedObj != null) {
-			
 			selectedObj.transform.Rotate(0, 90, 0);
 		}
 	}

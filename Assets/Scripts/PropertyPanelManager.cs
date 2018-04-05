@@ -78,7 +78,7 @@ public class PropertyPanelManager : MonoBehaviour {
 
 	public void SwitchToPanel(string panelKey)
 	{
-		Debug.Log ("attempting to switch panels");
+//		Debug.Log ("attempting to switch panels");
 		if (currentActivePanel != null)
 			currentActivePanel.SetActive (false);
 		GameObject resultObj;

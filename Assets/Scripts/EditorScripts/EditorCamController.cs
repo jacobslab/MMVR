@@ -16,8 +16,18 @@ public class EditorCamController : MonoBehaviour {
 	private EventManager eventManager;
 	public List<string> spawnToJson;
 
+
+	public enum ObjectMode {
+		Select,
+		Move,
+		Rotate
+	}
+	public ObjectMode objMode;
+
 	public GameObject transformHandlePrefab;
 	private GameObject transformHandleObj;
+
+	public bool objSelected=false;
 
 	//EXPERIMENT IS A SINGLETON
 	private static EditorCamController _instance;
@@ -90,25 +100,39 @@ public class EditorCamController : MonoBehaviour {
 //			transform.eulerAngles += Vector3.forward * rotFactor;
 //		else if (mouseXDel < 0f)
 //			transform.eulerAngles += Vector3.forward * -rotFactor;
-
-		transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+		if(!objSelected)
+			transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 		
 	}
 
-	public void SetSelectedObject(GameObject objSelected)
+	public void SetSelectedObject(GameObject objToBeSelected)
 	{
-		selectedObj = objSelected;
-		string cleanedName = Regex.Replace(objSelected.name, @"[\d-]", string.Empty);
-		cleanedName = Regex.Replace (cleanedName, "[_]", string.Empty);
+		Debug.Log ("about to set selected obj: " + objToBeSelected.name);
+		if (objToBeSelected != null) {
+			Debug.Log ("selected obj is: " + objToBeSelected.name);
+			//if another object was selected earlier, deselect that first
+			if(selectedObj!=null)
+				selectedObj.GetComponent<ObjectManipulator> ().selected = false;
+			selectedObj = objToBeSelected;
 
-//		SpawnTransformHandles (objSelected);
-		placeManager.propertyManager.SwitchToPanel (objSelected.name);
-		MMVR_Core.Instance.logicManager.SwitchToLogicLayer (objSelected.name);
+			//set debug
+			DebugUI.Instance.selObjText.text = selectedObj.name;
+
+			string cleanedName = Regex.Replace (objToBeSelected.name, @"[\d-]", string.Empty);
+			cleanedName = Regex.Replace (cleanedName, "[_]", string.Empty);
+
+//		SetTransformHandles (objSelected);
+			placeManager.propertyManager.SwitchToPanel (objToBeSelected.name);
+			MMVR_Core.Instance.logicManager.SwitchToLogicLayer (objToBeSelected.name);
+
+			selectedObj.GetComponent<ObjectManipulator> ().selected = true;
+		}
+
 //		if (selectedObj != null)
 //			mouseOrbit.target = selectedObj.transform;
 	}
 
-	void SpawnTransformHandles(GameObject objSelected)
+	void SetTransformHandles(GameObject objSelected)
 	{
 		transformHandleObj.transform.parent = objSelected.transform;
 		transformHandleObj.transform.localPosition = Vector3.zero;

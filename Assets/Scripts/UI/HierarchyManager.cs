@@ -54,9 +54,11 @@ public class HierarchyManager : MonoBehaviour {
 	}
 	public void UpdateSelection(HierarchyObject newObj)
 	{
-		if(selectedHierarchyObject!=null)
+		if (selectedHierarchyObject != null) {
 			selectedHierarchyObject.DeselectObject ();
-		
+			Debug.Log ("firstly deselected: " + selectedHierarchyObject.name);
+		}
+		Debug.Log ("updated selection " + newObj.name);
 		selectedHierarchyObject = newObj;
 	}
 	// Update is called once per frame

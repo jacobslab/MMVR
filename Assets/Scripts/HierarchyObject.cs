@@ -50,7 +50,7 @@ public class HierarchyObject : MonoBehaviour {
 		if (isSelected) {
 			SwitchToInputField ();
 		} else {
-			Debug.Log ("button clicked");
+//			Debug.Log ("button clicked");
 			HierarchyManager.Instance.UpdateSelection (gameObject.GetComponent<HierarchyObject> ());
 			spawnSelect.Select ();
 			isSelected = true;
@@ -58,7 +58,7 @@ public class HierarchyObject : MonoBehaviour {
 	}
 	public void DeselectObject()
 	{
-		Debug.Log ("deselected");
+//		Debug.Log ("deselected");
 		isSelected = false;
 		spawnSelect.Deselect ();
 	}
